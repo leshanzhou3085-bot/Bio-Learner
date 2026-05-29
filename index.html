@@ -9,14 +9,15 @@
     body {
       margin: 0;
       height: 100vh;
-      background: linear-gradient(to bottom, #0f172a, #020617);
+      background: linear-gradient(to bottom, #020a1d, #142986);
       color: white;
-      font-family: Arial, sans-serif;
+      font-family: 'Inter', sans-serif;
 
       display: flex;
       justify-content: center;
       align-items: center;
       text-align: center;
+      line-height: 250%;
     }
 
     .container {
@@ -42,17 +43,18 @@
       color: black;
       font-size: 1rem;
       cursor: pointer;
+      font-family: 'Inter', sans-serif;
     }
 
     button:hover {
-      background: #0ea5e9;
+      background: #5e94b4;
     }
   </style>
 </head>
 
 <body>
 
-  <div class="container">
+  <div class="scene">
     <h1>AI Biology Visualizer</h1>
 
     <p>
@@ -60,17 +62,130 @@
       simulations, and AI-powered explanations.
     </p>
 
-    <button onclick="startLearning()">
+    <button onclick="changePage(2)">
       Start Learning
     </button>
-    <p>New Feature!</p>
-  </div>
 
-  <script>
-    function startLearning() {
-      alert("Welcome to the future of biology learning.");
-    }
-  </script>
+  </div>
+<div class="scene" style="display:none;">
+    <h1>Welcome to the Biology Visualizer</h1>
+    <p>Explore the wonders of biology with our interactive tools.</p>
+    <button onclick="changePage(3)">
+      Unit 1: Biomolecules and Enzymes
+    </button><br>
+    <button onclick="changePage(4)">
+      Unit 2: Cell structure and Viruses
+    </button><br>
+    <button onclick="changePage(5)">
+      Unit 3: Cell Energy and Transport
+    </button><br>
+    <button onclick="changePage(6)">
+      Unit 4: DNA and Cell Cycle
+    </button><br>
+    <button onclick="changePage(7)">
+      Unit 5: Protein Synthesis, Gene Expression, Cell Differentiation, and Mutations
+    </button><br>
+    <button onclick="changePage(8)">
+      Unit 6: Plant and Animal(Body) Systems and Interactions
+    </button><br>
+    <button onclick="changePage(9)">
+      Unit 7: Meiosis and Genetics
+    </button><br>
+    <button onclick="changePage(10)">
+      Unit 8: Evolution
+    </button><br>
+    <button onclick="changePage(11)">
+      Unit 9: Ecology
+    </button><br>
+    <button onclick="changePage(1)">
+      Back to Home
+    </button>
+</div>
+<div class="scene" style="display:none;">
+    <h1>Unit 1: Biomolecules and Enzymes</h1>
+    <p>Explore the building blocks of life and how enzymes facilitate biochemical reactions.</p>
+    <button onclick="changePage(12)">
+      Biomolecules
+    </button><br>
+    <button onclick="changePage(13)">
+      Enzymes
+    </button><br>
+    <button onclick="changePage(2)">
+      Back to Units
+    </button>
+
+
+</div>
+<div class="scene" style="display:none;">
+  <button onclick = "changePage(2)">
+        Back to Units
+      </button>
+</div>
+<div class="scene" style="display:none;">
+  <button onclick = "changePage(2)">
+        Back to Units
+      </button>
+</div>
+<div class="scene" style="display:none;">
+  <button onclick = "changePage(2)">
+        Back to Units
+      </button>
+</div>
+<div class="scene" style="display:none;">
+  <button onclick = "changePage(2)">
+        Back to Units
+      </button>
+</div>
+<div class="scene" style="display:none;">
+  <button onclick = "changePage(2)">
+        Back to Units
+      </button>
+</div>
+<div class="scene" style="display:none;">
+  <button onclick = "changePage(2)">
+        Back to Units
+      </button>
+</div>
+<div class="scene" style="display:none;">
+  <button onclick = "changePage(2)">
+        Back to Units
+      </button>
+</div>
+<div class="scene" style="display:none;">
+  <button onclick = "changePage(2)">
+        Back to Units
+      </button>
+</div>
+<div class="scene" style="display:none;">
+  <button onclick = "changePage(3)">
+        Back
+      </button>
+</div>
+<div class="scene" style="display:none;">
+  <button onclick = "changePage(3)">
+        Back
+      </button>
+</div>
+
+    <!-- Juery --> 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js">
+        
+           
+        </script>
+ <script>
+       
+            var pages = document.getElementsByClassName("scene");
+            
+            function changePage(index) {
+               
+                for (var i = 0; i < pages.length; i++) {
+                    
+                    pages[i].style.display="none"; 
+                }
+                pages[index-1].style.display="block"; 
+            };
+            changePage(1);
+    </script>
 
 </body>
 </html>
