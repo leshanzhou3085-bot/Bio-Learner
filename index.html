@@ -3,189 +3,706 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Biology Visualizer</title>
-
+  <title>Biology Visualizer</title>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+ 
+    :root {
+      --cream:    #faf8f3;
+      --ink:      #1a1714;
+      --ink-mid:  #3d3830;
+      --ink-soft: #7a7167;
+      --rule:     rgba(26,23,20,0.12);
+      --page-bg:  #f4f1e8;
+    }
+ 
+    html { font-size: 18px; }
+ 
+    html, body { height: 100%; margin: 0; }
+ 
     body {
-      margin: 0;
-      height: 100vh;
-      background: linear-gradient(to bottom, #020a1d, #142986);
-      color: white;
+      min-height: 100vh;
+      background-color: var(--page-bg);
+      background-image:
+        repeating-linear-gradient(0deg, transparent, transparent 27px, rgba(26,23,20,0.06) 27px, rgba(26,23,20,0.06) 28px);
+      color: var(--ink);
       font-family: 'Inter', sans-serif;
-
       display: flex;
       justify-content: center;
+      align-items: stretch;
+      padding: 0;
+    }
+ 
+    /* ── scene wrapper (inner pages) ── */
+    .scene {
+      width: 100%;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 3rem 2.5rem 4rem;
+      animation: pageIn 0.35s cubic-bezier(.25,.8,.25,1) both;
+    }
+ 
+    /* ── home scene fills full viewport ── */
+    .scene.home-scene {
+      max-width: 100%;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      padding: 0 3rem;
+    }
+ 
+    .home-scene .masthead {
+      flex-shrink: 0;
+      margin-top: 2rem;
+    }
+ 
+    .home-scene .hero {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 2rem 0;
+    }
+ 
+    .home-scene .rule-double { flex-shrink: 0; }
+ 
+    .home-scene .home-footer {
+      flex-shrink: 0;
+      padding: 1.5rem 0 2rem;
+    }
+ 
+    @keyframes pageIn {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+ 
+    /* ── masthead strip ── */
+    .masthead {
+      display: flex;
       align-items: center;
+      justify-content: space-between;
+      border-top: 2px solid var(--ink);
+      border-bottom: 1px solid var(--ink);
+      padding: 8px 0;
+      margin-bottom: 3rem;
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-mid);
+      font-weight: 500;
+    }
+ 
+    .masthead strong {
+      color: var(--ink);
+      font-weight: 700;
+    }
+ 
+    /* ── hero text ── */
+    .hero {
       text-align: center;
-      line-height: 250%;
+      margin-bottom: 2.8rem;
     }
-
-    .container {
-      max-width: 700px;
+ 
+    .hero-eyebrow {
+      font-size: 0.8rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink-mid);
+      margin-bottom: 0.9rem;
+      font-weight: 600;
     }
-
+ 
     h1 {
-      font-size: 4rem;
-      margin-bottom: 20px;
+      font-family: 'Inter', sans-serif;
+      font-size: clamp(3.2rem, 7vw, 5.2rem);
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      color: var(--ink);
+      margin-bottom: 1rem;
     }
-
-    p {
-      font-size: 1.3rem;
-      color: #cbd5e1;
+ 
+    h2 {
+      font-family: 'EB Garamond', serif;
+      font-size: clamp(2.2rem, 4.5vw, 3.2rem);
+      font-weight: 600;
+      line-height: 1.15;
+      color: var(--ink);
+      margin-bottom: 0.75rem;
     }
-
-    button {
-      margin-top: 30px;
-      padding: 15px 30px;
+ 
+    .subtitle {
+      font-family: 'Inter', sans-serif;
+      font-style: normal;
+      font-size: 1.15rem;
+      color: var(--ink-mid);
+      line-height: 1.7;
+      max-width: 560px;
+      margin: 0 auto;
+      font-weight: 400;
+    }
+ 
+    /* ── horizontal rule ── */
+    .rule { border: none; border-top: 1px solid var(--rule); margin: 2rem 0; }
+    .rule-double {
       border: none;
-      border-radius: 10px;
-      background: #38bdf8;
-      color: black;
-      font-size: 1rem;
+      border-top: 3px double rgba(26,23,20,0.2);
+      margin: 2rem 0;
+    }
+ 
+    /* ── nav grid ── */
+    .nav-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+ 
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--rule);
       cursor: pointer;
+      transition: background 0.15s;
+      text-decoration: none;
+      background: none;
+      border-left: none;
+      border-right: none;
+      border-top: none;
+      border-radius: 0;
+      width: 100%;
+      text-align: left;
       font-family: 'Inter', sans-serif;
     }
-
-    button:hover {
-      background: #5e94b4;
+ 
+    .nav-item:first-child { border-top: 1px solid var(--rule); }
+ 
+    .nav-item:hover { background: rgba(26,23,20,0.04); }
+ 
+    .nav-num {
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      color: var(--ink-soft);
+      width: 2rem;
+      flex-shrink: 0;
+      font-weight: 600;
     }
+ 
+    .nav-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+ 
+    .nav-title {
+      flex: 1;
+      font-size: 0.95rem;
+      color: var(--ink);
+      font-weight: 400;
+    }
+ 
+    .nav-arrow {
+      color: var(--ink-soft);
+      font-size: 0.8rem;
+      transition: transform 0.15s;
+    }
+ 
+    .nav-item:hover .nav-arrow { transform: translateX(4px); }
+ 
+    /* ── unit page layout ── */
+    .unit-header {
+      border-left: 4px solid var(--unit-accent);
+      padding-left: 1.25rem;
+      margin-bottom: 2rem;
+    }
+ 
+    .unit-kicker {
+      font-size: 0.78rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--unit-accent);
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+ 
+    .unit-description {
+      font-family: 'EB Garamond', serif;
+      font-style: italic;
+      font-size: 1.2rem;
+      color: var(--ink-mid);
+      line-height: 1.6;
+    }
+ 
+    /* ── topic cards ── */
+    .topic-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      margin: 1.5rem 0 2rem;
+    }
+ 
+    .topic-card {
+      background: var(--cream);
+      border: 1px solid var(--rule);
+      border-top: 3px solid var(--unit-accent);
+      border-radius: 2px;
+      padding: 1.25rem;
+      cursor: pointer;
+      transition: box-shadow 0.2s, transform 0.15s;
+      text-align: left;
+      font-family: 'Inter', sans-serif;
+      width: 100%;
+    }
+ 
+    .topic-card:hover {
+      box-shadow: 0 4px 18px rgba(0,0,0,0.09);
+      transform: translateY(-2px);
+    }
+ 
+    .topic-card-title {
+      font-family: 'EB Garamond', serif;
+      font-size: 1.45rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 0.4rem;
+    }
+ 
+    .topic-card-desc {
+      font-size: 0.92rem;
+      color: var(--ink-mid);
+      line-height: 1.5;
+    }
+ 
+    /* ── coming soon panel ── */
+    .coming-soon {
+      background: var(--cream);
+      border: 1px solid var(--rule);
+      border-radius: 2px;
+      padding: 2.5rem;
+      text-align: center;
+      margin: 1.5rem 0 2rem;
+    }
+ 
+    .coming-soon-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+ 
+    .coming-soon h3 {
+      font-family: 'EB Garamond', serif;
+      font-size: 1.6rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: var(--ink);
+    }
+ 
+    .coming-soon p {
+      font-size: 1rem;
+      color: var(--ink-mid);
+      font-style: italic;
+    }
+ 
+    /* ── back link ── */
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.88rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--ink-mid);
+      cursor: pointer;
+      background: none;
+      border: none;
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      padding: 0;
+      transition: color 0.15s;
+      margin-bottom: 2.5rem;
+    }
+ 
+    .back-link:hover { color: var(--ink); }
+    .back-link::before { content: '←'; }
+ 
+    /* ── CTA button ── */
+    .cta-btn {
+      display: inline-block;
+      padding: 12px 36px;
+      background: var(--ink);
+      color: var(--cream);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border: 2px solid var(--ink);
+      border-radius: 2px;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+      margin-top: 1.5rem;
+      width: 100%;
+    }
+ 
+    .cta-btn:hover {
+      background: transparent;
+      color: var(--ink);
+    }
+ 
+    /* ── home hero decorative ── */
+    .home-ornament {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      justify-content: center;
+      margin: 1.5rem 0;
+      color: var(--ink-soft);
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+    }
+ 
+    .home-ornament::before,
+    .home-ornament::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--rule);
+    }
+ 
+    /* ── units index grid ── */
+    .units-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 2rem;
+    }
+ 
+    @media (max-width: 560px) {
+      .units-grid { grid-template-columns: 1fr 1fr; }
+    }
+ 
+    .unit-card {
+      background: var(--cream);
+      border: 1px solid var(--rule);
+      border-top: 4px solid var(--uc);
+      border-radius: 2px;
+      padding: 1rem 0.9rem 0.9rem;
+      cursor: pointer;
+      transition: box-shadow 0.2s, transform 0.15s;
+      text-align: left;
+      font-family: 'Inter', sans-serif;
+      width: 100%;
+    }
+ 
+    .unit-card:hover {
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+      transform: translateY(-2px);
+    }
+ 
+    .unit-card-num {
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--uc);
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+    }
+ 
+    .unit-card-name {
+      font-family: 'EB Garamond', serif;
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--ink);
+      line-height: 1.3;
+    }
+ 
+    /* ═══════════════════════════
+       Unit color themes
+       defined as CSS vars on each .scene
+    ═══════════════════════════ */
+ 
+    /* Unit 1 – Biomolecules: warm amber/gold */
+    .u1 { --unit-accent: #9a6c00; --unit-bg-tint: rgba(154,108,0,0.05); }
+    /* Unit 2 – Cell Structure: teal-green */
+    .u2 { --unit-accent: #1a7a5e; --unit-bg-tint: rgba(26,122,94,0.05); }
+    /* Unit 3 – Cell Energy: vivid coral/orange */
+    .u3 { --unit-accent: #b84a00; --unit-bg-tint: rgba(184,74,0,0.05); }
+    /* Unit 4 – DNA: deep indigo */
+    .u4 { --unit-accent: #3b2a8a; --unit-bg-tint: rgba(59,42,138,0.05); }
+    /* Unit 5 – Protein Synthesis: crimson */
+    .u5 { --unit-accent: #8b1a1a; --unit-bg-tint: rgba(139,26,26,0.05); }
+    /* Unit 6 – Plant & Animal: forest green */
+    .u6 { --unit-accent: #2a6a1a; --unit-bg-tint: rgba(42,106,26,0.05); }
+    /* Unit 7 – Meiosis & Genetics: violet-purple */
+    .u7 { --unit-accent: #6a2a8a; --unit-bg-tint: rgba(106,42,138,0.05); }
+    /* Unit 8 – Evolution: earthy sienna */
+    .u8 { --unit-accent: #7a3c1a; --unit-bg-tint: rgba(122,60,26,0.05); }
+    /* Unit 9 – Ecology: deep teal/ocean */
+    .u9 { --unit-accent: #0a5a72; --unit-bg-tint: rgba(10,90,114,0.05); }
   </style>
 </head>
-
+ 
 <body>
-
-  <div class="scene">
-    <h1>AI Biology Visualizer</h1>
-
-    <p>
-      Learn biology through interactive visuals,
-      simulations, and AI-powered explanations.
-    </p>
-
-    <button onclick="changePage(2)">
-      Start Learning
-    </button>
-
+ 
+<!-- PAGE 1: HOME -->
+<div class="scene home-scene">
+  <div class="masthead">
+    <span>Biology — Interactive Study Suite</span>
+    <strong>Biology</strong>
+    <span>Academic Edition</span>
   </div>
+  <div class="hero">
+    <div class="hero-eyebrow">Interactive Learning Platform</div><br><br>
+    <h1>Biology Visualizer</h1>
+    <div class="home-ornament">✦ ✦ ✦</div><br>
+    <p class="subtitle">Master biology through interactive simulations and annotated visuals — from molecules to ecosystems.</p><br><br>
+    <button class="cta-btn" onclick="changePage(2)">Enter the Course →</button>
+  </div>
+  <hr class="rule-double"><br><br>
+  <p class="home-footer" style="font-family:'Inter',sans-serif;font-size:0.8rem;color:var(--ink-mid);text-align:center;letter-spacing:0.08em;text-transform:uppercase;font-weight:500;">9 Units · Interactive Visualizations · Interactive Simulations</p>
+</div>
+ 
+<!-- PAGE 2: UNITS INDEX -->
 <div class="scene" style="display:none;">
-    <h1>Welcome to the Biology Visualizer</h1>
-    <p>Explore the wonders of biology with our interactive tools.</p>
-    <button onclick="changePage(3)">
-      Unit 1: Biomolecules and Enzymes
-    </button><br>
-    <button onclick="changePage(4)">
-      Unit 2: Cell structure and Viruses
-    </button><br>
-    <button onclick="changePage(5)">
-      Unit 3: Cell Energy and Transport
-    </button><br>
-    <button onclick="changePage(6)">
-      Unit 4: DNA and Cell Cycle
-    </button><br>
-    <button onclick="changePage(7)">
-      Unit 5: Protein Synthesis, Gene Expression, Cell Differentiation, and Mutations
-    </button><br>
-    <button onclick="changePage(8)">
-      Unit 6: Plant and Animal(Body) Systems and Interactions
-    </button><br>
-    <button onclick="changePage(9)">
-      Unit 7: Meiosis and Genetics
-    </button><br>
-    <button onclick="changePage(10)">
-      Unit 8: Evolution
-    </button><br>
-    <button onclick="changePage(11)">
-      Unit 9: Ecology
-    </button><br>
-    <button onclick="changePage(1)">
-      Back to Home
+  <div class="masthead">
+    <span>Course Map</span>
+    <strong>All Units</strong>
+    <span>Biology Visualizer</span>
+  </div>
+  <div class="hero" style="margin-bottom:2rem;">
+    <div class="hero-eyebrow">Course Overview</div>
+    <h1>Select a Unit</h1>
+    <p class="subtitle">Choose a unit below to access interactive tools and visualizations.</p>
+  </div>
+  <div class="units-grid">
+    <button class="unit-card" style="--uc:#9a6c00" onclick="changePage(3)">
+      <div class="unit-card-num">Unit 01</div>
+      <div class="unit-card-name">Biomolecules &amp; Enzymes</div>
     </button>
-</div>
-<div class="scene" style="display:none;">
-    <h1>Unit 1: Biomolecules and Enzymes</h1>
-    <p>Explore the building blocks of life and how enzymes facilitate biochemical reactions.</p>
-    <button onclick="changePage(12)">
-      Biomolecules
-    </button><br>
-    <button onclick="changePage(13)">
-      Enzymes
-    </button><br>
-    <button onclick="changePage(2)">
-      Back to Units
+    <button class="unit-card" style="--uc:#1a7a5e" onclick="changePage(4)">
+      <div class="unit-card-num">Unit 02</div>
+      <div class="unit-card-name">Cell Structure &amp; Viruses</div>
     </button>
-
-
+    <button class="unit-card" style="--uc:#b84a00" onclick="changePage(5)">
+      <div class="unit-card-num">Unit 03</div>
+      <div class="unit-card-name">Cell Energy &amp; Transport</div>
+    </button>
+    <button class="unit-card" style="--uc:#3b2a8a" onclick="changePage(6)">
+      <div class="unit-card-num">Unit 04</div>
+      <div class="unit-card-name">DNA &amp; Cell Cycle</div>
+    </button>
+    <button class="unit-card" style="--uc:#8b1a1a" onclick="changePage(7)">
+      <div class="unit-card-num">Unit 05</div>
+      <div class="unit-card-name">Protein Synthesis &amp; Mutations</div>
+    </button>
+    <button class="unit-card" style="--uc:#2a6a1a" onclick="changePage(8)">
+      <div class="unit-card-num">Unit 06</div>
+      <div class="unit-card-name">Plant &amp; Animal Systems</div>
+    </button>
+    <button class="unit-card" style="--uc:#6a2a8a" onclick="changePage(9)">
+      <div class="unit-card-num">Unit 07</div>
+      <div class="unit-card-name">Meiosis &amp; Genetics</div>
+    </button>
+    <button class="unit-card" style="--uc:#7a3c1a" onclick="changePage(10)">
+      <div class="unit-card-num">Unit 08</div>
+      <div class="unit-card-name">Evolution</div>
+    </button>
+    <button class="unit-card" style="--uc:#0a5a72" onclick="changePage(11)">
+      <div class="unit-card-num">Unit 09</div>
+      <div class="unit-card-name">Ecology</div>
+    </button>
+  </div>
+  <hr class="rule">
+  <button class="back-link" onclick="changePage(1)"> Home</button>
 </div>
-<div class="scene" style="display:none;">
-  <button onclick = "changePage(2)">
-        Back to Units
-      </button>
+ 
+<!-- PAGE 3: UNIT 1 – Biomolecules (amber/gold) -->
+<div class="scene u1" style="display:none;background-image:repeating-linear-gradient(0deg,transparent,transparent 27px,rgba(26,23,20,0.04) 27px,rgba(26,23,20,0.04) 28px),radial-gradient(ellipse 70% 50% at 90% 10%,rgba(154,108,0,0.07) 0%,transparent 60%);">
+  <button class="back-link" onclick="changePage(2)"> All Units</button>
+  <div class="unit-header">
+    <div class="unit-kicker">Unit 01 — Biochemistry</div>
+    <h2>Biomolecules &amp; Enzymes</h2>
+    <p class="unit-description">The molecular foundation of life — carbohydrates, lipids, proteins, nucleic acids, and the catalytic machinery that drives cellular chemistry.</p>
+  </div>
+  <div class="topic-grid">
+    <button class="topic-card" onclick="changePage(12)">
+      <div class="topic-card-title">Biomolecules</div>
+      <div class="topic-card-desc">Structure and function of macromolecules: carbohydrates, lipids, proteins, and nucleic acids.</div>
+    </button>
+    <button class="topic-card" onclick="changePage(13)">
+      <div class="topic-card-title">Enzymes</div>
+      <div class="topic-card-desc">Catalytic proteins, activation energy, substrate binding, inhibition, and reaction rates.</div>
+    </button>
+  </div>
 </div>
-<div class="scene" style="display:none;">
-  <button onclick = "changePage(2)">
-        Back to Units
-      </button>
+ 
+<!-- PAGE 4: UNIT 2 – Cell Structure (teal-green) -->
+<div class="scene u2" style="display:none;background-image:repeating-linear-gradient(0deg,transparent,transparent 27px,rgba(26,23,20,0.04) 27px,rgba(26,23,20,0.04) 28px),radial-gradient(ellipse 70% 50% at 90% 10%,rgba(26,122,94,0.08) 0%,transparent 60%);">
+  <button class="back-link" onclick="changePage(2)"> All Units</button>
+  <div class="unit-header">
+    <div class="unit-kicker">Unit 02 — Cell Biology</div>
+    <h2>Cell Structure &amp; Viruses</h2>
+    <p class="unit-description">Prokaryotic and eukaryotic cell architecture, organelle function, membrane dynamics, and the biology of viral particles.</p>
+  </div>
+  <div class="coming-soon">
+    <span class="coming-soon-icon">🔬</span>
+    <h3>Content in Development</h3>
+    <p>Interactive visualizations for this unit are being prepared. Check back soon.</p>
+  </div>
 </div>
-<div class="scene" style="display:none;">
-  <button onclick = "changePage(2)">
-        Back to Units
-      </button>
+ 
+<!-- PAGE 5: UNIT 3 – Cell Energy (orange/coral) -->
+<div class="scene u3" style="display:none;background-image:repeating-linear-gradient(0deg,transparent,transparent 27px,rgba(26,23,20,0.04) 27px,rgba(26,23,20,0.04) 28px),radial-gradient(ellipse 70% 50% at 90% 10%,rgba(184,74,0,0.08) 0%,transparent 60%);">
+  <button class="back-link" onclick="changePage(2)"> All Units</button>
+  <div class="unit-header">
+    <div class="unit-kicker">Unit 03 — Bioenergetics</div>
+    <h2>Cell Energy &amp; Transport</h2>
+    <p class="unit-description">Photosynthesis, cellular respiration, ATP synthesis, passive and active transport across membranes.</p>
+  </div>
+  <div class="coming-soon">
+    <span class="coming-soon-icon">⚡</span>
+    <h3>Content in Development</h3>
+    <p>Interactive visualizations for this unit are being prepared. Check back soon.</p>
+  </div>
 </div>
-<div class="scene" style="display:none;">
-  <button onclick = "changePage(2)">
-        Back to Units
-      </button>
+ 
+<!-- PAGE 6: UNIT 4 – DNA (indigo) -->
+<div class="scene u4" style="display:none;background-image:repeating-linear-gradient(0deg,transparent,transparent 27px,rgba(26,23,20,0.04) 27px,rgba(26,23,20,0.04) 28px),radial-gradient(ellipse 70% 50% at 90% 10%,rgba(59,42,138,0.08) 0%,transparent 60%);">
+  <button class="back-link" onclick="changePage(2)"> All Units</button>
+  <div class="unit-header">
+    <div class="unit-kicker">Unit 04 — Molecular Genetics</div>
+    <h2>DNA &amp; Cell Cycle</h2>
+    <p class="unit-description">DNA replication, repair, and the regulated stages of mitosis — from interphase through cytokinesis.</p>
+  </div>
+  <div class="coming-soon">
+    <span class="coming-soon-icon">🧬</span>
+    <h3>Content in Development</h3>
+    <p>Interactive visualizations for this unit are being prepared. Check back soon.</p>
+  </div>
 </div>
-<div class="scene" style="display:none;">
-  <button onclick = "changePage(2)">
-        Back to Units
-      </button>
+ 
+<!-- PAGE 7: UNIT 5 – Protein Synthesis (crimson) -->
+<div class="scene u5" style="display:none;background-image:repeating-linear-gradient(0deg,transparent,transparent 27px,rgba(26,23,20,0.04) 27px,rgba(26,23,20,0.04) 28px),radial-gradient(ellipse 70% 50% at 90% 10%,rgba(139,26,26,0.08) 0%,transparent 60%);">
+  <button class="back-link" onclick="changePage(2)"> All Units</button>
+  <div class="unit-header">
+    <div class="unit-kicker">Unit 05 — Gene Expression</div>
+    <h2>Protein Synthesis &amp; Mutations</h2>
+    <p class="unit-description">Transcription, translation, gene regulation, cell differentiation, and the molecular consequences of mutations.</p>
+  </div>
+  <div class="coming-soon">
+    <span class="coming-soon-icon">🔴</span>
+    <h3>Content in Development</h3>
+    <p>Interactive visualizations for this unit are being prepared. Check back soon.</p>
+  </div>
 </div>
-<div class="scene" style="display:none;">
-  <button onclick = "changePage(2)">
-        Back to Units
-      </button>
+ 
+<!-- PAGE 8: UNIT 6 – Plant & Animal (forest green) -->
+<div class="scene u6" style="display:none;background-image:repeating-linear-gradient(0deg,transparent,transparent 27px,rgba(26,23,20,0.04) 27px,rgba(26,23,20,0.04) 28px),radial-gradient(ellipse 70% 50% at 90% 10%,rgba(42,106,26,0.08) 0%,transparent 60%);">
+  <button class="back-link" onclick="changePage(2)"> All Units</button>
+  <div class="unit-header">
+    <div class="unit-kicker">Unit 06 — Systems Biology</div>
+    <h2>Plant &amp; Animal Systems</h2>
+    <p class="unit-description">Comparative physiology — plant structure and function, organ systems, homeostasis, and inter-system regulation.</p>
+  </div>
+  <div class="coming-soon">
+    <span class="coming-soon-icon">🌿</span>
+    <h3>Content in Development</h3>
+    <p>Interactive visualizations for this unit are being prepared. Check back soon.</p>
+  </div>
 </div>
-<div class="scene" style="display:none;">
-  <button onclick = "changePage(2)">
-        Back to Units
-      </button>
+ 
+<!-- PAGE 9: UNIT 7 – Meiosis (violet) -->
+<div class="scene u7" style="display:none;background-image:repeating-linear-gradient(0deg,transparent,transparent 27px,rgba(26,23,20,0.04) 27px,rgba(26,23,20,0.04) 28px),radial-gradient(ellipse 70% 50% at 90% 10%,rgba(106,42,138,0.08) 0%,transparent 60%);">
+  <button class="back-link" onclick="changePage(2)"> All Units</button>
+  <div class="unit-header">
+    <div class="unit-kicker">Unit 07 — Heredity</div>
+    <h2>Meiosis &amp; Genetics</h2>
+    <p class="unit-description">Meiotic cell division, Mendelian and non-Mendelian inheritance, pedigree analysis, and chromosomal theory.</p>
+  </div>
+  <div class="coming-soon">
+    <span class="coming-soon-icon">🔮</span>
+    <h3>Content in Development</h3>
+    <p>Interactive visualizations for this unit are being prepared. Check back soon.</p>
+  </div>
 </div>
-<div class="scene" style="display:none;">
-  <button onclick = "changePage(2)">
-        Back to Units
-      </button>
+ 
+<!-- PAGE 10: UNIT 8 – Evolution (sienna) -->
+<div class="scene u8" style="display:none;background-image:repeating-linear-gradient(0deg,transparent,transparent 27px,rgba(26,23,20,0.04) 27px,rgba(26,23,20,0.04) 28px),radial-gradient(ellipse 70% 50% at 90% 10%,rgba(122,60,26,0.08) 0%,transparent 60%);">
+  <button class="back-link" onclick="changePage(2)"> All Units</button>
+  <div class="unit-header">
+    <div class="unit-kicker">Unit 08 — Evolutionary Biology</div>
+    <h2>Evolution</h2>
+    <p class="unit-description">Natural selection, genetic drift, speciation, phylogenetics, and the evidence for common descent.</p>
+  </div>
+  <div class="coming-soon">
+    <span class="coming-soon-icon">🦴</span>
+    <h3>Content in Development</h3>
+    <p>Interactive visualizations for this unit are being prepared. Check back soon.</p>
+  </div>
 </div>
-<div class="scene" style="display:none;">
-  <button onclick = "changePage(3)">
-        Back
-      </button>
+ 
+<!-- PAGE 11: UNIT 9 – Ecology (ocean teal) -->
+<div class="scene u9" style="display:none;background-image:repeating-linear-gradient(0deg,transparent,transparent 27px,rgba(26,23,20,0.04) 27px,rgba(26,23,20,0.04) 28px),radial-gradient(ellipse 70% 50% at 90% 10%,rgba(10,90,114,0.08) 0%,transparent 60%);">
+  <button class="back-link" onclick="changePage(2)"> All Units</button>
+  <div class="unit-header">
+    <div class="unit-kicker">Unit 09 — Ecology</div>
+    <h2>Ecology</h2>
+    <p class="unit-description">Population dynamics, community interactions, ecosystem energy flow, nutrient cycling, and conservation biology.</p>
+  </div>
+  <div class="coming-soon">
+    <span class="coming-soon-icon">🌍</span>
+    <h3>Content in Development</h3>
+    <p>Interactive visualizations for this unit are being prepared. Check back soon.</p>
+  </div>
 </div>
-<div class="scene" style="display:none;">
-  <button onclick = "changePage(3)">
-        Back
-      </button>
+ 
+<!-- PAGE 12: Biomolecules sub-page -->
+<div class="scene u1" style="display:none;background-image:repeating-linear-gradient(0deg,transparent,transparent 27px,rgba(26,23,20,0.04) 27px,rgba(26,23,20,0.04) 28px);">
+  <button class="back-link" onclick="changePage(3)"> Unit 1</button>
+  <div class="unit-header">
+    <div class="unit-kicker">Unit 01 · Topic A</div>
+    <h2>Biomolecules</h2>
+    <p class="unit-description">The four classes of macromolecules: structure, monomer–polymer relationships, and biological roles.</p>
+  </div>
+  <div class="coming-soon">
+    <span class="coming-soon-icon">⚗️</span>
+    <h3>Visualization Coming Soon</h3>
+    <p>An interactive macromolecule explorer is under construction.</p>
+  </div>
 </div>
-
-    <!-- Juery --> 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js">
-        
-           
-        </script>
- <script>
-       
-            var pages = document.getElementsByClassName("scene");
-            
-            function changePage(index) {
-               
-                for (var i = 0; i < pages.length; i++) {
-                    
-                    pages[i].style.display="none"; 
-                }
-                pages[index-1].style.display="block"; 
-            };
-            changePage(1);
-    </script>
-
+ 
+<!-- PAGE 13: Enzymes sub-page -->
+<div class="scene u1" style="display:none;background-image:repeating-linear-gradient(0deg,transparent,transparent 27px,rgba(26,23,20,0.04) 27px,rgba(26,23,20,0.04) 28px);">
+  <button class="back-link" onclick="changePage(3)"> Unit 1</button>
+  <div class="unit-header">
+    <div class="unit-kicker">Unit 01 · Topic B</div>
+    <h2>Enzymes</h2>
+    <p class="unit-description">Protein catalysts, induced-fit model, enzyme kinetics, and the effect of temperature, pH, and inhibitors.</p>
+  </div>
+  <div class="coming-soon">
+    <span class="coming-soon-icon">🔩</span>
+    <h3>Visualization Coming Soon</h3>
+    <p>An interactive enzyme kinetics simulator is under construction.</p>
+  </div>
+</div>
+ 
+<script>
+  var pages = document.getElementsByClassName("scene");
+  function changePage(index) {
+    for (var i = 0; i < pages.length; i++) pages[i].style.display = "none";
+    var t = pages[index - 1];
+    t.style.display = "block";
+    t.style.animation = "none";
+    t.offsetHeight;
+    t.style.animation = "";
+    window.scrollTo(0, 0);
+  }
+  changePage(1);
+</script>
+ 
 </body>
 </html>
+ 
