@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive 3D Guanine Nucleotide</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #1a1a1a;
+            font-family: sans-serif;
+        }
+        #canvas-container {
+            width: 100vw;
+            height: 100vh;
+        }
+        #info {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            color: white;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 12px;
+            border-radius: 8px;
+            pointer-events: none;
+        }
+        .legend {
+            margin-top: 5px;
+            font-size: 0.9em;
+        }
+        .dot {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 5px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="info">
+        <h2>Guanine Nucleotide (dGMP)</h2>
+        <p>Left Click + Drag to Rotate | Scroll to Zoom</p>
+        <div class="legend"><span class="dot" style="background: #333333;"></span> Carbon (C)</div>
+        <div class="legend"><span class="dot" style="background: #3355ff;"></span> Nitrogen (N)</div>
+        <div class="legend"><span class="dot" style="background: #ff3333;"></span> Oxygen (O)</div>
+        <div class="legend"><span class="dot" style="background: #ff9900;"></span> Phosphorus (P)</div>
+        <div class="legend"><span class="dot" style="background: #ffffff; border: 1px solid #000;"></span> Hydrogen (H)</div>
+    </div>
+
+    <div id="canvas-container"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+
+    <script>
+        const container = document.getElementById('canvas-container');
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x1a1a1a);
+
+        const camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.set(0, 2, 18);
+
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        container.appendChild(renderer.domElement);
+
+        const controls = new THREE.OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.05;
+
+        // --- Lighting ---
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+        scene.add(ambientLight);
+
+        const dirLight1 = new THREE.DirectionalLight(0xffffff, 0.8);
+        dirLight1.position.set(10, 20, 10);
+        scene.add(dirLight1);
+
+        const dirLight2 = new THREE.DirectionalLight(0xffffff, 0.3);
+        dirLight2.position.set(-10, -20, -10);
+        scene.add(dirLight2);
+
+        const moleculeGroup = new THREE.Group();
+        scene.add(moleculeGroup);
+
+        const colors = { C: 0x333333, N: 0x3355ff, O: 0xff3333, P: 0xff9900, H: 0xffffff };
+        const radii = { P: 0.58, C: 0.45, N: 0.43, O: 0.4, H: 0.23 };
+
+        const atomsData = [];
+        const bondsData = [];
+
+        function addAtom(type, x, y, z) {
+            atomsData.push([type, x, y, z]);
+            return atomsData.length - 1;
+        }
+
+        // --- 1. FIXED DEOXYRIBOSE SUGAR PENTAGON ---
+        // Planar ring coordinates for a clean geometric layout
+        const o4_s = addAtom('O', -1.2,  1.4,  0.0); // Ring Top Oxygen
+        const c1_s = addAtom('C',  0.2,  1.4,  0.0); // C1' Right
+        const c2_s = addAtom('C',  0.6,  0.0,  0.0); // C2' Bottom Right
+        const c3_s = addAtom('C', -0.6, -0.8,  0.0); // C3' Bottom Left
+        const c4_s = addAtom('C', -1.7,  0.1,  0.0); // C4' Left
+
+        // Exocyclic Side Chain C5' attached to C4'
+        const c5_s = addAtom('C', -3.1,  0.6,  0.0); 
+
+        // Sugar Ring Bonds
+        bondsData.push(
+            [o4_s, c1_s], [c1_s, c2_s], [c2_s, c3_s], [c3_s, c4_s], [c4_s, o4_s],
+            [c4_s, c5_s]
+        );
+
+        // Sugar Hydrogens & Hydroxides (Projecting outwards along the Z-axis for 3D depth)
+        const h1_s  = addAtom('H',  0.6,  2.0,  0.8);
+        const h2_1  = addAtom('H',  1.2, -0.2,  0.8);
+        const h2_2  = addAtom('H',  1.1, -0.2, -0.8); // Deoxy position (two hydrogens)
+        const h3_s  = addAtom('H', -0.5, -1.4,  0.8);
+        const o3_s  = addAtom('O', -0.9, -1.7, -1.0); // 3' OH Group
+        const h_o3s = addAtom('H', -0.3, -2.4, -1.0);
+        const h4_s  = addAtom('H', -1.9, -0.4, -0.9);
+        const h5_1  = addAtom('H', -3.3,  1.2,  0.8);
+        const h5_2  = addAtom('H', -3.8, -0.2,  0.0);
+
+        bondsData.push(
+            [c1_s, h1_s], [c2_s, h2_1], [c2_s, h2_2], 
+            [c3_s, h3_s], [c3_s, o3_s], [o3_s, h_o3s],
+            [c4_s, h4_s], [c5_s, h5_1], [c5_s, h5_2]
+        );
+
+        // --- 2. PHOSPHATE GROUP ---
+        // Bound to the C5' side-chain oxygen link
+        const o4   = addAtom('O', -3.3,  1.5, -1.1); // Linking Oxygen
+        const p    = addAtom('P', -4.5,  2.5, -1.5);
+        const o1   = addAtom('O', -4.2,  3.9, -1.0); // Double bonded =O
+        const o2   = addAtom('O', -5.8,  2.0, -0.8); // O-
+        const o3   = addAtom('O', -4.7,  2.5, -3.0); // OH
+        const h_o3 = addAtom('H', -5.3,  3.1, -3.4);
+
+        bondsData.push(
+            [c5_s, o4], [o4, p], [p, o1], [p, o2], [p, o3], [o3, h_o3]
+        );
+
+        // --- 3. GUANINE BASE (Purine Double Ring Structure) ---
+        // Fused directly to the Sugar C1' position
+        const n9_b = addAtom('N',  1.1,  2.4,  0.0); // Glycosidic Bond Link
+        const c8_b = addAtom('C',  1.1,  3.7,  0.0);
+        const h8_b = addAtom('H',  0.3,  4.4,  0.0);
+        const n7_b = addAtom('N',  2.3,  4.2,  0.0);
+        const c5_b = addAtom('C',  3.1,  3.0,  0.0);
+        const c4_b = addAtom('C',  2.3,  1.9,  0.0);
+
+        bondsData.push(
+            [c1_s, n9_b],
+            [n9_b, c8_b], [c8_b, n7_b], [n7_b, c5_b], [c5_b, c4_b], [c4_b, n9_b],
+            [c8_b, h8_b]
+        );
+
+        // Six-Membered ring network additions
+        const c6_b  = addAtom('C',  4.5,  2.9,  0.0);
+        const o6_b  = addAtom('O',  5.3,  3.9,  0.0); // Top Carbonyl Keto Oxygen
+        const n1_b  = addAtom('N',  5.0,  1.6,  0.0);
+        const h1_b  = addAtom('H',  6.0,  1.5,  0.0);
+        const c2_b  = addAtom('C',  4.2,  0.5,  0.0);
+        const n2_b  = addAtom('N',  4.8, -0.7,  0.0); // Exocyclic Amine (NH2) side group
+        const h2_a  = addAtom('H',  5.8, -0.7,  0.0);
+        const h2_b_ = addAtom('H',  4.3, -1.5,  0.0);
+        const n3_b  = addAtom('N',  2.9,  0.6,  0.0);
+
+        bondsData.push(
+            [c5_b, c6_b], [c6_b, o6_b], [c6_b, n1_b], [n1_b, h1_b],
+            [n1_b, c2_b], [c2_b, n2_b], [n2_b, h2_a], [n2_b, h2_b_],
+            [c2_b, n3_b], [n3_b, c4_b]
+        );
+
+        // --- 4. Mesh Synthesis Construction ---
+        const atomPositions = [];
+        const sphereGeometryCache = {};
+
+        atomsData.forEach((atom) => {
+            const type = atom[0];
+            const pos = new THREE.Vector3(atom[1], atom[2], atom[3]);
+            atomPositions.push(pos);
+
+            if (!sphereGeometryCache[type]) {
+                sphereGeometryCache[type] = new THREE.SphereGeometry(radii[type], 24, 24);
+            }
+
+            const material = new THREE.MeshStandardMaterial({
+                color: colors[type],
+                roughness: 0.25,
+                metalness: 0.1
+            });
+
+            const mesh = new THREE.Mesh(sphereGeometryCache[type], material);
+            mesh.position.copy(pos);
+            moleculeGroup.add(mesh);
+        });
+
+        bondsData.forEach((bond) => {
+            const p1 = atomPositions[bond[0]];
+            const p2 = atomPositions[bond[1]];
+
+            const distance = p1.distanceTo(p2);
+            const position = p1.clone().lerp(p2, 0.5);
+
+            const cylinderGeometry = new THREE.CylinderGeometry(0.08, 0.08, distance, 16);
+            const cylinderMaterial = new THREE.MeshStandardMaterial({ color: 0xcccccc, roughness: 0.4 });
+            const cylinder = new THREE.Mesh(cylinderGeometry, cylinderMaterial);
+
+            cylinder.position.copy(position);
+            
+            const direction = new THREE.Vector3().subVectors(p2, p1).normalize();
+            const alignVector = new THREE.Vector3(0, 1, 0);
+            cylinder.quaternion.setFromUnitVectors(alignVector, direction);
+
+            moleculeGroup.add(cylinder);
+        });
+
+        // Center entire molecular system inside camera coordinate viewport
+        const box = new THREE.Box3().setFromObject(moleculeGroup);
+        const center = new THREE.Vector3();
+        box.getCenter(center);
+        moleculeGroup.position.sub(center);
+
+        // --- 5. Animation Logic Loop ---
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            if (controls.state === -1) {
+                moleculeGroup.rotation.y += 0.002;
+            }
+            
+            controls.update();
+            renderer.render(scene, camera);
+        }
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        animate();
+    </script>
+</body>
+</html>
