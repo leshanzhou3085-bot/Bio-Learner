@@ -1,3 +1,6 @@
+
+raw
+Index · HTML
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,7 +36,11 @@
       align-items: stretch;
       padding: 0;
     }
- 
+    .image {
+      width: 25px;
+      height:25px;
+      background-color: var(--page-bg);
+    }
     /* ── scene wrapper (inner pages) ── */
     .scene {
       width: 100%;
@@ -455,13 +462,13 @@
     <span>Academic Edition</span>
   </div>
   <div class="hero">
-    <div class="hero-eyebrow">Interactive Learning Platform</div><br><br>
+    <div class="hero-eyebrow">Interactive Learning Platform</div>
     <h1>Biology Visualizer</h1>
-    <div class="home-ornament">✦ ✦ ✦</div><br>
-    <p class="subtitle">Master biology through interactive simulations and annotated visuals — from molecules to ecosystems.</p><br><br>
+    <div class="home-ornament">✦ ✦ ✦</div>
+    <p class="subtitle">Master biology through interactive simulations and annotated visuals — from molecules to ecosystems.</p>
     <button class="cta-btn" onclick="changePage(2)">Enter the Course →</button>
   </div>
-  <hr class="rule-double"><br><br>
+  <hr class="rule-double">
   <p class="home-footer" style="font-family:'Inter',sans-serif;font-size:0.8rem;color:var(--ink-mid);text-align:center;letter-spacing:0.08em;text-transform:uppercase;font-weight:500;">9 Units · Interactive Visualizations · Interactive Simulations</p>
 </div>
  
@@ -659,7 +666,7 @@
   </div>
 </div>
  
-<!-- PAGE 12: Biomolecules sub-page -->
+<!-- PAGE 12: Biomolecules sub-page – SLIDESHOW -->
 <div class="scene u1" style="display:none;background-image:repeating-linear-gradient(0deg,transparent,transparent 27px,rgba(26,23,20,0.04) 27px,rgba(26,23,20,0.04) 28px);">
   <button class="back-link" onclick="changePage(3)"> Unit 1</button>
   <div class="unit-header">
@@ -667,12 +674,395 @@
     <h2>Biomolecules</h2>
     <p class="unit-description">The four classes of macromolecules: structure, monomer–polymer relationships, and biological roles.</p>
   </div>
-  <div class="coming-soon">
-    <span class="coming-soon-icon">⚗️</span>
-    <h3>Visualization Coming Soon</h3>
-    <p>An interactive macromolecule explorer is under construction.</p>
+ 
+  <!-- Slide tab bar -->
+  <div class="slide-tabs" id="bioTabs">
+    <button class="slide-tab active" onclick="showSlide(0)">Carbohydrates</button>
+    <button class="slide-tab" onclick="showSlide(1)">Lipids</button>
+    <button class="slide-tab" onclick="showSlide(2)">Proteins</button>
+    <button class="slide-tab" onclick="showSlide(3)">Nucleic Acids</button>
+    <button class="slide-tab" onclick="showSlide(4)">Summary</button>
   </div>
+ 
+  <!-- SLIDE 0: Carbohydrates -->
+  <div class="slide" id="slide-0">
+    <div class="slide-hero" style="background:rgba(154,108,0,0.08); border-left: 4px solid #9a6c00;">
+      <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8YnJlYWR8ZW58MHx8MHx8fDA%3D" alt="Carbohydrates icon">
+      <div class="slide-hero-text">
+        <div class="unit-kicker">Macromolecule 01</div>
+        <h3 class="slide-title">Carbohydrates</h3>
+        <p class="slide-tagline">Biomolecules used for energy and structural support in living organisms.</p>
+      </div>
+    </div>
+    <div class="slide-body">
+      <div class="slide-col">
+        <div class="slide-section-label">Elements &amp; Structure</div>
+        <p class="slide-text">Carbohydrates are made up of <strong>carbon, hydrogen, and oxygen</strong> in a ratio of roughly <strong>1C : 2H : 1O</strong> — for example, glucose has the formula C₆H₁₂O₆.</p>
+        <div class="slide-section-label" style="margin-top:1.2rem;">Monomer → Polymer</div>
+        <p class="slide-text">The monomer is a <strong>monosaccharide</strong> (one sugar). Two monomers form a <strong>disaccharide</strong>. Many monomers chain together via <strong>dehydration synthesis</strong> to form a <strong>polysaccharide</strong>. All monosaccharides and disaccharides end in <em>"-ose."</em></p>
+        <div class="slide-section-label" style="margin-top:1.2rem;">How They Bond</div>
+        <p class="slide-text">Carbohydrates bond to each other through <strong>dehydration synthesis</strong> — water is removed as two smaller molecules join to form a larger one. The reverse (adding water to break the bond) is called <strong>hydrolysis</strong>.</p>
+      </div>
+      <div class="slide-col">
+        <div class="slide-section-label">Examples</div>
+        <ul class="slide-list">
+          <li><strong>Glucose</strong> — the most common energy source for nearly all organisms; a monosaccharide</li>
+          <li><strong>Fructose</strong> — fruit sugar; a monosaccharide found naturally in fruits and honey</li>
+          <li><strong>Lactose</strong> — milk sugar; a disaccharide (glucose + galactose)</li>
+          <li><strong>Sucrose</strong> — table sugar; a disaccharide (glucose + fructose)</li>
+          <li><strong>Ribose / Deoxyribose</strong> — monosaccharides that form the backbone of RNA and DNA</li>
+          <li><strong>Starch</strong> — polysaccharide; how plants store excess carbohydrates (e.g. potatoes, rice, bread)</li>
+          <li><strong>Cellulose</strong> — polysaccharide used by plants for <em>structural support</em> in cell walls (e.g. wood, cotton fiber)</li>
+          <li><strong>Chitin</strong> — polysaccharide used by insects and fungi for </em> in insections and fungi.</li>
+        </ul>
+        <div class="slide-fact-box">
+          <span class="slide-fact-label">Key Functions</span>
+          Breaking down carbohydrates provides organisms with <strong>energy</strong>. Excess carbs are stored as <strong>starches</strong> (long chains of polysaccharides). Plants also use <strong>cellulose</strong> for structural support — a different polysaccharide made from the same glucose monomer.
+        </div>
+      </div>
+    </div>
+  </div>
+ 
+  <!-- SLIDE 1: Lipids -->
+  <div class="slide" id="slide-1" style="display:none;">
+    <div class="slide-hero" style="background:rgba(154,108,0,0.08); border-left: 4px solid #9a6c00;">
+      <img src="https://media.istockphoto.com/id/2251587071/photo/group-of-healthy-ingredients-high-in-unsaturated-fatty-acid-and-omega-3-food-that-improve.webp?a=1&b=1&s=612x612&w=0&k=20&c=7Dni34pmCtckZ1r0358oouYIGICYXzcRQ7JeMQYJWmU=">
+      <div class="slide-hero-text">
+        <div class="unit-kicker">Macromolecule 02</div>
+        <h3 class="slide-title">Lipids</h3>
+        <p class="slide-tagline">Hydrophobic molecules used for energy storage, waterproofing, chemical signaling, and insulation.</p>
+      </div>
+    </div>
+    <div class="slide-body">
+      <div class="slide-col">
+        <div class="slide-section-label">Elements &amp; Structure</div>
+        <p class="slide-text">Lipids are made up of <strong>carbon, hydrogen, and oxygen</strong>. The ratio is roughly <strong>1C : 2H</strong> — oxygen is present only in trace amounts. Unlike the other biomolecules, lipids have <strong>no true monomer</strong>.</p>
+        <div class="slide-section-label" style="margin-top:1.2rem;">Functional Groups</div>
+        <p class="slide-text">Most lipids are built from two parts: <strong>glycerol</strong> (an alcohol with three oxygen groups) and <strong>fatty acids</strong> (long hydrocarbon chains). All lipids <strong>repel water</strong> — they are hydrophobic and do not bond to water molecules.</p>
+        <div class="slide-section-label" style="margin-top:1.2rem;">Fats (Triglycerides)</div>
+        <p class="slide-text">All fats are <strong>triglycerides</strong> — three fatty acids bonded to one glycerol molecule. Examples: <em>butter, lard, olive oil, vegetable oil, body fat (adipose tissue)</em>.</p>
+      </div>
+      <div class="slide-col">
+        <div class="slide-section-label">Four Key Functions + Examples</div>
+        <ul class="slide-list">
+          <li><strong>Storing large amounts of energy</strong> — body fat (adipose tissue) stores far more energy per gram than carbohydrates; e.g. fat reserves in bears before hibernation</li>
+          <li><strong>Waterproof barriers</strong> — the waxy cuticle on plant leaves; the oily coating on a duck's feathers; earwax</li>
+          <li><strong>Chemical messengers (hormones)</strong> — steroids are lipids with four rings bonded together; examples include <em>testosterone, estrogen, cortisol, and cholesterol</em></li>
+          <li><strong>Insulation</strong> — the blubber layer in whales and seals; myelin sheath insulating nerve fibers</li>
+        </ul>
+        <div class="slide-fact-box">
+          <span class="slide-fact-label">Steroids</span>
+          Steroids are a special class of lipid defined by <strong>four carbon rings</strong> bonded together. They function as <strong>hormones</strong> — chemical signals used throughout the body. Examples: testosterone (muscle development), estrogen (reproductive signaling), cortisol (stress response), cholesterol (cell membrane structure).
+        </div>
+      </div>
+    </div>
+  </div>
+ 
+  <!-- SLIDE 2: Proteins -->
+  <div class="slide" id="slide-2" style="display:none;">
+    <div class="slide-hero" style="background:rgba(154,108,0,0.08); border-left: 4px solid #9a6c00;">
+      <img src="https://media.istockphoto.com/id/1457411409/photo/food-rich-in-healthy-proteins.webp?a=1&b=1&s=612x612&w=0&k=20&c=J9kJtE_Ym8rczbLz3P54suAVOYnTOxJbqypW2jvDNuU=" alt="W3Schools.com" >
+      <div class="slide-hero-text">
+        <div class="unit-kicker">Macromolecule 03</div>
+        <h3 class="slide-title">Proteins</h3>
+        <p class="slide-tagline">Vital for structural support, enzymes, transport, fighting infection, and much more.</p>
+      </div>
+    </div>
+    <div class="slide-body">
+      <div class="slide-col">
+        <div class="slide-section-label">Elements &amp; Structure</div>
+        <p class="slide-text">All proteins contain <strong>carbon, hydrogen, oxygen, and nitrogen</strong>. Sulfur may also be present. The monomer is an <strong>amino acid</strong>; the polymer is a <strong>protein</strong> (also called a polypeptide — a chain of amino acid chains).</p>
+        <div class="slide-section-label" style="margin-top:1.2rem;">How Amino Acids Bond</div>
+        <p class="slide-text">Amino acids are joined through <strong>dehydration synthesis</strong>. The <strong>C-group</strong> of one amino acid binds to the <strong>N-group</strong> of the next, forming a <strong>peptide bond</strong>.</p>
+        <div class="slide-section-label" style="margin-top:1.2rem;">Four Phases of Protein Production</div>
+        <ul class="slide-list" style="margin-top:0.5rem;">
+          <li><strong>Primary</strong> — amino acids are bound together into a chain</li>
+          <li><strong>Secondary</strong> — individual amino acids are bent and molded as needed</li>
+          <li><strong>Tertiary</strong> — the entire chain is bent and folded into a subunit</li>
+          <li><strong>Quaternary</strong> — multiple completed subunits are fitted together to make the complete protein</li>
+        </ul>
+      </div>
+      <div class="slide-col">
+        <div class="slide-section-label">Functions &amp; Examples</div>
+        <ul class="slide-list">
+          <li><strong>Structural support</strong> — <em>keratin</em> (hair, nails, skin); <em>collagen</em> (tendons, ligaments, skin); <em>actin</em> (muscle fibers)</li>
+          <li><strong>Enzymes</strong> — speed up chemical reactions; e.g. <em>amylase</em> (breaks down starch in saliva), <em>lactase</em> (breaks down lactose), <em>DNA polymerase</em> (copies DNA)</li>
+          <li><strong>Transport</strong> — <em>hemoglobin</em> carries oxygen in red blood cells; <em>channel proteins</em> move molecules across cell membranes</li>
+          <li><strong>Fighting infection</strong> — <em>antibodies</em> identify and neutralize pathogens like bacteria and viruses</li>
+          <li><strong>Hormones</strong> — protein hormones (e.g. <em>insulin</em>, <em>glucagon</em>) must bind a <em>cellular receptor</em> before they can affect the cell, since they have difficulty crossing the membrane</li>
+        </ul>
+        <div class="slide-fact-box">
+          <span class="slide-fact-label">Protein Hormones vs. Steroid Hormones</span>
+          Protein hormones cannot easily pass through the cell membrane — they must fit a <strong>cellular receptor</strong> on the cell surface to deliver their signal. Steroid hormones (lipids) can pass directly through the membrane.
+        </div>
+      </div>
+    </div>
+  </div>
+ 
+  <!-- SLIDE 3: Nucleic Acids -->
+  <div class="slide" id="slide-3" style="display:none;">
+    <div class="slide-hero" style="background:rgba(154,108,0,0.08); border-left: 4px solid #9a6c00;">
+      <img src = "https://media.istockphoto.com/id/2200974839/photo/3d-rendering-colorful-dna-and-flying-human-cell-or-embryonic-stem-cell-on-microscope.webp?a=1&b=1&s=612x612&w=0&k=20&c=eyBTFou1wMOEny6NBdrtsVT8qqfXH5xmJdS0HrhTwBg=">
+      <div class="slide-hero-text">
+        <div class="unit-kicker">Macromolecule 04</div>
+        <h3 class="slide-title">Nucleic Acids</h3>
+        <p class="slide-tagline">Blueprints for making proteins and transmitting genetic information to the next generation.</p>
+      </div>
+    </div>
+    <div class="slide-body">
+      <div class="slide-col">
+        <div class="slide-section-label">Elements — Remember "CHONP"</div>
+        <p class="slide-text">Nucleic acids contain <strong>Carbon, Hydrogen, Oxygen, Nitrogen, and Phosphorus</strong>. Use the acronym <strong>CHONP</strong> to remember all five elements.</p>
+        <div class="slide-section-label" style="margin-top:1.2rem;">Monomer: The Nucleotide</div>
+        <p class="slide-text">Every nucleotide has three parts: a <strong>5-carbon sugar</strong>, a <strong>phosphate group</strong>, and a <strong>nitrogenous base</strong>. Many nucleotides chain together to form a nucleic acid polymer.</p>
+        <div class="slide-section-label" style="margin-top:1.2rem;">DNA vs. RNA</div>
+        <ul class="slide-list" style="margin-top:0.5rem;">
+          <li><strong>DNA</strong> — stores the blueprints for making proteins; carries hereditary information passed from parent to child; uses <em>deoxyribose</em> sugar</li>
+          <li><strong>RNA</strong> — reads and carries out the DNA blueprints to build proteins; uses <em>ribose</em> sugar; <strong>cannot</strong> be passed down to offspring</li>
+        </ul>
+      </div>
+      <div class="slide-col">
+        <div class="slide-section-label">Examples &amp; Functions</div>
+        <ul class="slide-list">
+          <li><strong>DNA (deoxyribonucleic acid)</strong> — found in the nucleus; contains the genetic instructions for every protein your cells make; passed from parents to offspring (hereditary traits)</li>
+          <li><strong>RNA (ribonucleic acid)</strong> — carries instructions from DNA to the ribosome so proteins can be built; <em>not</em> passed on to offspring</li>
+          <li><strong>mRNA (messenger RNA)</strong> — the specific RNA molecule that carries the protein-building code out of the nucleus</li>
+          <li><strong>ATP (adenosine triphosphate)</strong> — a special nucleotide that serves as the cell's main energy-carrying molecule</li>
+        </ul>
+        <div class="slide-fact-box">
+          <span class="slide-fact-label">Heredity</span>
+          DNA is the only biomolecule that can be passed from <strong>parent to child</strong>. This is what makes traits <em>hereditary</em> — eye color, blood type, and many other characteristics are encoded in DNA and inherited. RNA carries out the instructions but is <strong>not</strong> passed to offspring.
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+ <div class="slide" id="slide-4" style="display:none;">
+    <div class="slide-hero" style="background:rgba(154,108,0,0.08); border-left: 4px solid #9a6c00;">
+      <img src = "https://images.unsplash.com/photo-1603126857599-f6e157fa2fe6?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8bWFjcm9tb2xlY3VsZXN8ZW58MHx8MHx8fDA%3D=">
+      <div class="slide-hero-text">
+        <div class="unit-kicker">Summary 05</div>
+        <h3 class="slide-title">Summary</h3>
+        <p class="slide-tagline">A comprehensive review over the four macromolecules.</p>
+      </div>
+    </div>
+    <div class="slide-body">
+      <div class="slide-col">
+        <div class="slide-section-label">Elements — Remember "CHONP"</div>
+        <p class="slide-text">Nucleic acids contain <strong>Carbon, Hydrogen, Oxygen, Nitrogen, and Phosphorus</strong>. Use the acronym <strong>CHONP</strong> to remember all five elements.</p>
+        <div class="slide-section-label" style="margin-top:1.2rem;">Monomer: The Nucleotide</div>
+        <p class="slide-text">Every nucleotide has three parts: a <strong>5-carbon sugar</strong>, a <strong>phosphate group</strong>, and a <strong>nitrogenous base</strong>. Many nucleotides chain together to form a nucleic acid polymer.</p>
+        <div class="slide-section-label" style="margin-top:1.2rem;">DNA vs. RNA</div>
+        <ul class="slide-list" style="margin-top:0.5rem;">
+          <li><strong>DNA</strong> — stores the blueprints for making proteins; carries hereditary information passed from parent to child; uses <em>deoxyribose</em> sugar</li>
+          <li><strong>RNA</strong> — reads and carries out the DNA blueprints to build proteins; uses <em>ribose</em> sugar; <strong>cannot</strong> be passed down to offspring</li>
+        </ul>
+      </div>
+      <div class="slide-col">
+        <div class="slide-section-label">Examples &amp; Functions</div>
+        <ul class="slide-list">
+          <li><strong>DNA (deoxyribonucleic acid)</strong> — found in the nucleus; contains the genetic instructions for every protein your cells make; passed from parents to offspring (hereditary traits)</li>
+          <li><strong>RNA (ribonucleic acid)</strong> — carries instructions from DNA to the ribosome so proteins can be built; <em>not</em> passed on to offspring</li>
+          <li><strong>mRNA (messenger RNA)</strong> — the specific RNA molecule that carries the protein-building code out of the nucleus</li>
+          <li><strong>ATP (adenosine triphosphate)</strong> — a special nucleotide that serves as the cell's main energy-carrying molecule</li>
+        </ul>
+        <div class="slide-fact-box">
+          <span class="slide-fact-label">Heredity</span>
+          DNA is the only biomolecule that can be passed from <strong>parent to child</strong>. This is what makes traits <em>hereditary</em> — eye color, blood type, and many other characteristics are encoded in DNA and inherited. RNA carries out the instructions but is <strong>not</strong> passed to offspring.
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Nav controls -->
+  <div class="slide-nav">
+    <button class="slide-nav-btn" id="prevBtn" onclick="stepSlide(-1)" disabled>← Previous</button>
+    <span class="slide-counter" id="slideCounter">1 / 5</span>
+    <button class="slide-nav-btn" id="nextBtn" onclick="stepSlide(1)">Next →</button>
+  </div><br><br><br><br><br>
 </div>
+ 
+<style>
+  /* Slideshow styles — scoped to biomolecules page */
+  .slide-tabs {
+    display: flex;
+    border-bottom: 2px solid var(--rule);
+    margin-bottom: 1.5rem;
+    gap: 0;
+  }
+  .slide-tab {
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -2px;
+    padding: 10px 20px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    cursor: pointer;
+    transition: color 0.15s, border-color 0.15s;
+    border-radius: 0;
+    width: auto;
+  }
+  .slide-tab::after { display: none; }
+  .slide-tab:hover { color: var(--ink); transform: none; background: none; }
+  .slide-tab.active { color: #9a6c00; border-bottom-color: #9a6c00; }
+ 
+  .slide-hero {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.5rem 1.75rem;
+    border-radius: 2px;
+    margin-bottom: 1.5rem;
+  }
+  .slide-icon { font-size: 2.8rem; flex-shrink: 0; }
+  .slide-title {
+    font-family: 'EB Garamond', serif;
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--ink);
+    margin: 0.15rem 0 0.35rem;
+  }
+  .slide-tagline {
+    font-family: 'EB Garamond', serif;
+    font-style: italic;
+    font-size: 1.05rem;
+    color: var(--ink-mid);
+    margin: 0;
+  }
+ 
+  .slide-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  @media (max-width: 640px) { .slide-body { grid-template-columns: 1fr; } }
+ 
+  .slide-col {
+    background: var(--cream);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    padding: 1.25rem 1.4rem;
+  }
+  .slide-section-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #9a6c00;
+    margin-bottom: 0.5rem;
+  }
+  .slide-text {
+    font-size: 0.92rem;
+    color: var(--ink-mid);
+    line-height: 1.65;
+  }
+  .slide-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+  }
+  .slide-list li {
+    font-size: 0.88rem;
+    color: var(--ink-mid);
+    line-height: 1.5;
+    padding-left: 1rem;
+    position: relative;
+  }
+  .slide-list li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: #9a6c00;
+    font-weight: 700;
+  }
+  .slide-fact-box {
+    margin-top: 1.1rem;
+    background: rgba(154,108,0,0.07);
+    border-left: 3px solid #9a6c00;
+    border-radius: 0 2px 2px 0;
+    padding: 0.75rem 1rem;
+    font-size: 0.85rem;
+    color: var(--ink-mid);
+    line-height: 1.55;
+  }
+  .slide-fact-label {
+    display: block;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #9a6c00;
+    margin-bottom: 0.3rem;
+  }
+ 
+  .slide-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid var(--rule);
+    padding-top: 1.25rem;
+    margin-top: 0.5rem;
+  }
+  .slide-nav-btn {
+    background: none;
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    padding: 8px 20px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    color: var(--ink-mid);
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+    width: auto;
+  }
+  .slide-nav-btn::after { display: none; }
+  .slide-nav-btn:hover:not(:disabled) { background: var(--cream); color: var(--ink); border-color: var(--ink-mid); transform: none; }
+  .slide-nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+  .slide-counter {
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    color: var(--ink-soft);
+    text-transform: uppercase;
+  }
+</style>
+ 
+<script>
+  var currentSlide = 0;
+  var totalSlides = 5;
+ 
+  function showSlide(index) {
+    for (var i = 0; i < totalSlides; i++) {
+      var s = document.getElementById('slide-' + i);
+      var t = document.querySelectorAll('.slide-tab')[i];
+      if (s) s.style.display = (i === index) ? 'block' : 'none';
+      if (t) t.classList.toggle('active', i === index);
+    }
+    currentSlide = index;
+    document.getElementById('prevBtn').disabled = (index === 0);
+    document.getElementById('nextBtn').disabled = (index === totalSlides - 1);
+    document.getElementById('slideCounter').textContent = (index + 1) + ' / ' + totalSlides;
+  }
+ 
+  function stepSlide(dir) {
+    var next = currentSlide + dir;
+    if (next >= 0 && next < totalSlides) showSlide(next);
+  }
+</script>
  
 <!-- PAGE 13: Enzymes sub-page -->
 <div class="scene u1" style="display:none;background-image:repeating-linear-gradient(0deg,transparent,transparent 27px,rgba(26,23,20,0.04) 27px,rgba(26,23,20,0.04) 28px);">
@@ -705,4 +1095,3 @@
  
 </body>
 </html>
- 

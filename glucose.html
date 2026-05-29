@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive 3D Glucose Molecule</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #1a1a1a;
+            font-family: sans-serif;
+        }
+        #canvas-container {
+            width: 100vw;
+            height: 100vh;
+        }
+        #info {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            color: white;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            border-radius: 8px;
+            pointer-events: none;
+        }
+        .legend {
+            margin-top: 5px;
+            font-size: 0.9em;
+        }
+        .dot {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="info">
+        <h2>Glucose Molecule (C<sub>6</sub>H<sub>12</sub>O<sub>6</sub>)</h2>
+        <p>Left Click + Drag to Rotate | Scroll to Zoom</p>
+        <div class="legend"><span class="dot" style="background: #333;"></span> Carbon (C)</div>
+        <div class="legend"><span class="dot" style="background: #ff3333;"></span> Oxygen (O)</div>
+        <div class="legend"><span class="dot" style="background: #ffffff; border: 1px solid #000;"></span> Hydrogen (H)</div>
+    </div>
+
+    <div id="canvas-container"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+
+    <script>
+        // --- 1. Scene Setup ---
+        const container = document.getElementById('canvas-container');
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x1a1a1a);
+
+        const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.set(0, 5, 15);
+
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        container.appendChild(renderer.domElement);
+
+        const controls = new THREE.OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.05;
+
+        // --- 2. Lighting ---
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
+        scene.add(ambientLight);
+
+        const dirLight1 = new THREE.DirectionalLight(0xffffff, 0.8);
+        dirLight1.position.set(10, 15, 10);
+        scene.add(dirLight1);
+
+        const dirLight2 = new THREE.DirectionalLight(0xffffff, 0.3);
+        dirLight2.position.set(-10, -15, -10);
+        scene.add(dirLight2);
+
+        // --- 3. Molecular Data (Approximated D-Glucose Chair Conformation) ---
+        // Colors
+        const colors = {
+            C: 0x333333,
+            O: 0xff3333,
+            H: 0xffffff
+        };
+
+        // Radii for atoms
+        const radii = { C: 0.5, O: 0.4, H: 0.25 };
+
+        // Atom definitions: [Element, x, y, z]
+        const atomsData = [
+            // Ring carbons
+            ['C',  0.74,  0.37,  0.77],  // C1
+            ['C', -0.58, -0.28,  0.42],  // C2
+            ['C', -0.54, -0.62, -1.07],  // C3
+            ['C',  0.76,  0.11, -1.61],  // C4
+            ['C',  1.92, -0.32, -0.69],  // C5
+            // Ring oxygen
+            ['O',  1.82,  0.27,  0.60],  // O5 (Ring O)
+            
+            // Exocyclic Carbon (C6)
+            ['C',  3.26,  0.08, -1.30],  // C6
+
+            // Hydroxyl Oxygens
+            ['O',  0.86,  1.74,  1.02],  // O1
+            ['O', -1.65,  0.54,  0.86],  // O2
+            ['O', -1.69, -0.10, -1.73],  // O3
+            ['O',  0.71,  1.51, -1.78],  // O4
+            ['O',  4.30, -0.49, -0.52],  // O6
+
+            // Hydrogens (attached to Carbons and Oxygens)
+            ['H',  0.79, -0.19,  1.71],  // H1
+            ['H', -0.67, -1.22,  0.98],  // H2
+            ['H', -0.47, -1.71, -1.20],  // H3
+            ['H',  0.88, -0.32, -2.61],  // H4
+            ['H',  1.85, -1.41, -0.57],  // H5
+            ['H',  3.32,  1.17, -1.39],  // H6a
+            ['H',  3.36, -0.34, -2.31],  // H6b
+            
+            // Hydroxyl Hydrogens
+            ['H',  0.13,  2.04,  1.57],  // HO1
+            ['H', -2.48,  0.12,  0.65],  // HO2
+            ['H', -1.59, -0.32, -2.67],  // HO3
+            ['H',  1.54,  1.86, -1.42],  // HO4
+            ['H',  5.14, -0.29, -0.94]   // HO6
+        ];
+
+        // Explicit bonds between atom indices
+        const bondsData = [
+            [0, 1], [1, 2], [2, 3], [3, 4], [4, 5], [5, 0], // Ring
+            [4, 6], // C5 - C6
+            [0, 7], [1, 8], [2, 9], [3, 10], [6, 11], // C-O bonds
+            [0, 12], [1, 13], [2, 14], [3, 15], [4, 16], [6, 17], [6, 18], // C-H bonds
+            [7, 19], [8, 20], [9, 21], [10, 22], [11, 23] // O-H bonds
+        ];
+
+        const moleculeGroup = new THREE.Group();
+        scene.add(moleculeGroup);
+
+        // --- 4. Build Atom Meshes ---
+        const atomPositions = [];
+        const sphereGeometryCache = {};
+
+        atomsData.forEach((atom) => {
+            const type = atom[0];
+            const x = atom[1];
+            const y = atom[2];
+            const z = atom[3];
+            const pos = new THREE.Vector3(x, y, z);
+            atomPositions.push(pos);
+
+            // Cache geometries for performance
+            if (!sphereGeometryCache[type]) {
+                sphereGeometryCache[type] = new THREE.SphereGeometry(radii[type], 32, 32);
+            }
+
+            const material = new THREE.MeshStandardMaterial({
+                color: colors[type],
+                roughness: 0.3,
+                metalness: 0.1
+            });
+
+            const mesh = new THREE.Mesh(sphereGeometryCache[type], material);
+            mesh.position.copy(pos);
+            moleculeGroup.add(mesh);
+        });
+
+        // --- 5. Build Bond Meshes (Cylinders) ---
+        bondsData.forEach((bond) => {
+            const p1 = atomPositions[bond[0]];
+            const p2 = atomPositions[bond[1]];
+
+            // Calculate distance and direction
+            const distance = p1.distanceTo(p2);
+            const position = p1.clone().lerp(p2, 0.5);
+
+            const cylinderGeometry = new THREE.CylinderGeometry(0.08, 0.08, distance, 16);
+            const cylinderMaterial = new THREE.MeshStandardMaterial({ color: 0xcccccc, roughness: 0.4 });
+            const cylinder = new THREE.Mesh(cylinderGeometry, cylinderMaterial);
+
+            // Position and orient the cylinder to connect the two atoms
+            cylinder.position.copy(position);
+            
+            // Align cylinder axis (Y) with the vector between points
+            const direction = new THREE.Vector3().subVectors(p2, p1).normalize();
+            const alignVector = new THREE.Vector3(0, 1, 0);
+            cylinder.quaternion.setFromUnitVectors(alignVector, direction);
+
+            moleculeGroup.add(cylinder);
+        });
+
+        // Center the entire molecule group group in the scene
+        const box = new THREE.Box3().setFromObject(moleculeGroup);
+        const center = new THREE.Vector3();
+        box.getCenter(center);
+        moleculeGroup.position.sub(center);
+
+        // --- 6. Animation Loop & Responsiveness ---
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            // Slow ambient rotation when user isn't interacting
+            if (!controls.state == -1) {
+                moleculeGroup.rotation.y += 0.002;
+            }
+            
+            controls.update();
+            renderer.render(scene, camera);
+        }
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        animate();
+    </script>
+</body>
+</html>
