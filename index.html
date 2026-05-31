@@ -1,6 +1,3 @@
-
-raw
-Index · HTML
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -543,6 +540,10 @@ Index · HTML
       <div class="topic-card-title">Enzymes</div>
       <div class="topic-card-desc">Catalytic proteins, activation energy, substrate binding, inhibition, and reaction rates.</div>
     </button>
+    <button class="topic-card" onclick="changePage(14)">
+      <div class="topic-card-title">Vocabulary</div>
+      <div class="topic-card-desc">Key terms for ADV Biomolecules &amp; Enzymes — definitions for all 30 vocabulary words.</div>
+    </button>
   </div>
 </div>
  
@@ -839,43 +840,93 @@ Index · HTML
     </div>
     <iframe src="Nucleotide.html" width="100%" height="500px" style="border:none; border-radius:8px;"></iframe>
   </div>
-
-
-
-
-
+ 
+ 
+ 
+ 
+ 
  <div class="slide" id="slide-4" style="display:none;">
     <div class="slide-hero" style="background:rgba(154,108,0,0.08); border-left: 4px solid #9a6c00;">
-      <img src = "https://images.unsplash.com/photo-1603126857599-f6e157fa2fe6?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8bWFjcm9tb2xlY3VsZXN8ZW58MHx8MHx8fDA%3D=">
+      <img src="https://images.unsplash.com/photo-1603126857599-f6e157fa2fe6?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8bWFjcm9tb2xlY3VsZXN8ZW58MHx8MHx8fDA%3D=">
       <div class="slide-hero-text">
         <div class="unit-kicker">Summary 05</div>
-        <h3 class="slide-title">Summary</h3>
-        <p class="slide-tagline">A comprehensive review over the four macromolecules.</p>
+        <h3 class="slide-title">Biomolecule Summary</h3>
+        <p class="slide-tagline">A side-by-side review of all four macromolecules — function, monomer, and key examples.</p>
       </div>
     </div>
+ 
+    <!-- Summary comparison table -->
+    <div style="overflow-x:auto; margin-bottom:1.5rem;">
+      <table class="bio-summary-table">
+        <thead>
+          <tr>
+            <th>Macromolecule</th>
+            <th>Elements</th>
+            <th>Monomer</th>
+            <th>Polymer</th>
+            <th>Key Functions</th>
+            <th>Common Examples</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>🍞 Carbohydrates</strong></td>
+            <td>C, H, O<br><em>(1C : 2H : 1O)</em></td>
+            <td>Monosaccharide<br><em>(e.g. glucose)</em></td>
+            <td>Polysaccharide</td>
+            <td>Quick energy source; structural support in plant cell walls</td>
+            <td>Glucose, Fructose, Sucrose, Lactose, Starch, Cellulose, Chitin</td>
+          </tr>
+          <tr>
+            <td><strong>🥑 Lipids</strong></td>
+            <td>C, H, O<br><em>(trace O)</em></td>
+            <td>No true monomer<br><em>(glycerol + fatty acids)</em></td>
+            <td>Triglyceride / Steroid</td>
+            <td>Long-term energy storage; waterproofing; hormones; insulation</td>
+            <td>Body fat, Butter, Olive oil, Testosterone, Estrogen, Cholesterol, Myelin</td>
+          </tr>
+          <tr>
+            <td><strong>🥩 Proteins</strong></td>
+            <td>C, H, O, N<br><em>(sometimes S)</em></td>
+            <td>Amino acid</td>
+            <td>Polypeptide / Protein</td>
+            <td>Structural support; enzymes; transport; immune defense; hormones</td>
+            <td>Keratin, Collagen, Hemoglobin, Amylase, Lactase, Antibodies, Insulin</td>
+          </tr>
+          <tr>
+            <td><strong>🧬 Nucleic Acids</strong></td>
+            <td>C, H, O, N, P<br><em>("CHONP")</em></td>
+            <td>Nucleotide<br><em>(sugar + phosphate + base)</em></td>
+            <td>DNA / RNA</td>
+            <td>Genetic information storage; protein synthesis instructions; energy transfer (ATP)</td>
+            <td>DNA, mRNA, tRNA, rRNA, ATP</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+ 
     <div class="slide-body">
       <div class="slide-col">
-        <div class="slide-section-label">Elements — Remember "CHONP"</div>
-        <p class="slide-text">Nucleic acids contain <strong>Carbon, Hydrogen, Oxygen, Nitrogen, and Phosphorus</strong>. Use the acronym <strong>CHONP</strong> to remember all five elements.</p>
-        <div class="slide-section-label" style="margin-top:1.2rem;">Monomer: The Nucleotide</div>
-        <p class="slide-text">Every nucleotide has three parts: a <strong>5-carbon sugar</strong>, a <strong>phosphate group</strong>, and a <strong>nitrogenous base</strong>. Many nucleotides chain together to form a nucleic acid polymer.</p>
-        <div class="slide-section-label" style="margin-top:1.2rem;">DNA vs. RNA</div>
-        <ul class="slide-list" style="margin-top:0.5rem;">
-          <li><strong>DNA</strong> — stores the blueprints for making proteins; carries hereditary information passed from parent to child; uses <em>deoxyribose</em> sugar</li>
-          <li><strong>RNA</strong> — reads and carries out the DNA blueprints to build proteins; uses <em>ribose</em> sugar; <strong>cannot</strong> be passed down to offspring</li>
+        <div class="slide-section-label">Quick Memory Tips</div>
+        <ul class="slide-list">
+          <li><strong>Carbs end in "-ose"</strong> — glucose, fructose, sucrose, lactose, maltose</li>
+          <li><strong>Enzymes end in "-ase"</strong> — these are <em>proteins</em> that catalyze reactions</li>
+          <li><strong>Lipids have no true monomer</strong> — they're built from glycerol + fatty acids (or 4-ring steroids)</li>
+          <li><strong>"CHONP"</strong> — the only macromolecule containing <em>Phosphorus</em> is a nucleic acid</li>
+          <li><strong>Peptide bond</strong> — formed when two amino acids join via dehydration synthesis (C-group binds N-group)</li>
+          <li><strong>DNA vs. RNA</strong> — DNA uses <em>deoxyribose</em> and is heritable; RNA uses <em>ribose</em> and carries out instructions</li>
         </ul>
       </div>
       <div class="slide-col">
-        <div class="slide-section-label">Examples &amp; Functions</div>
-        <ul class="slide-list">
-          <li><strong>DNA (deoxyribonucleic acid)</strong> — found in the nucleus; contains the genetic instructions for every protein your cells make; passed from parents to offspring (hereditary traits)</li>
-          <li><strong>RNA (ribonucleic acid)</strong> — carries instructions from DNA to the ribosome so proteins can be built; <em>not</em> passed on to offspring</li>
-          <li><strong>mRNA (messenger RNA)</strong> — the specific RNA molecule that carries the protein-building code out of the nucleus</li>
-          <li><strong>ATP (adenosine triphosphate)</strong> — a special nucleotide that serves as the cell's main energy-carrying molecule</li>
-        </ul>
-        <div class="slide-fact-box">
-          <span class="slide-fact-label">Heredity</span>
-          DNA is the only biomolecule that can be passed from <strong>parent to child</strong>. This is what makes traits <em>hereditary</em> — eye color, blood type, and many other characteristics are encoded in DNA and inherited. RNA carries out the instructions but is <strong>not</strong> passed to offspring.
+        <div class="slide-section-label">Bonding: Dehydration Synthesis &amp; Hydrolysis</div>
+        <p class="slide-text">All macromolecules (except lipids) are built by <strong>dehydration synthesis</strong> — water is removed as monomers join. The reverse reaction, <strong>hydrolysis</strong>, adds water to break the polymer apart. Lipids bond the same way but are not considered true polymers.</p>
+        <div class="slide-fact-box" style="margin-top:1rem;">
+          <span class="slide-fact-label">Protein Levels of Organization</span>
+          Proteins pass through four structural levels: <strong>Primary</strong> (amino acid chain) → <strong>Secondary</strong> (local folding: α-helices, β-sheets) → <strong>Tertiary</strong> (full 3D shape of one subunit) → <strong>Quaternary</strong> (multiple subunits assembled). Enzymes are at the <em>tertiary or quaternary</em> level.
+        </div>
+        <div class="slide-fact-box" style="margin-top:0.75rem;">
+          <span class="slide-fact-label">Why Lipids Are Different</span>
+          Unlike the other three macromolecules, lipids are defined by being <strong>hydrophobic</strong> (water-repelling) rather than by a shared monomer. They are grouped together because they all repel water, not because they share a repeating subunit.
         </div>
       </div>
     </div>
@@ -924,6 +975,13 @@ Index · HTML
     padding: 1.5rem 1.75rem;
     border-radius: 2px;
     margin-bottom: 1.5rem;
+  }
+  .slide-hero img {
+    width: 90px;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 4px;
+    flex-shrink: 0;
   }
   .slide-icon { font-size: 2.8rem; flex-shrink: 0; }
   .slide-title {
@@ -1042,6 +1100,44 @@ Index · HTML
     color: var(--ink-soft);
     text-transform: uppercase;
   }
+ 
+  /* ── Biomolecule Summary Table ── */
+  .bio-summary-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.82rem;
+    background: var(--cream);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+  }
+  .bio-summary-table thead tr {
+    background: rgba(154,108,0,0.12);
+  }
+  .bio-summary-table th {
+    text-align: left;
+    padding: 10px 12px;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #9a6c00;
+    border-bottom: 2px solid rgba(154,108,0,0.25);
+  }
+  .bio-summary-table td {
+    padding: 10px 12px;
+    color: var(--ink-mid);
+    line-height: 1.45;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+  }
+  .bio-summary-table tbody tr:hover { background: rgba(154,108,0,0.04); }
+  .bio-summary-table tbody tr:last-child td { border-bottom: none; }
+  .bio-summary-table td:first-child { color: var(--ink); font-size: 0.85rem; }
+ 
+  /* ── Enzyme slideshow SVG diagrams ── */
+  .enzyme-diagram { width: 100%; margin: 0.75rem 0; }
+  .enzyme-diagram svg { width: 100%; height: auto; display: block; }
 </style>
  
 <script>
@@ -1067,7 +1163,7 @@ Index · HTML
   }
 </script>
  
-<!-- PAGE 13: Enzymes sub-page -->
+<!-- PAGE 13: Enzymes sub-page – SLIDESHOW -->
 <div class="scene u1" style="display:none;background-image:repeating-linear-gradient(0deg,transparent,transparent 27px,rgba(26,23,20,0.04) 27px,rgba(26,23,20,0.04) 28px);">
   <button class="back-link" onclick="changePage(3)"> Unit 1</button>
   <div class="unit-header">
@@ -1075,12 +1171,244 @@ Index · HTML
     <h2>Enzymes</h2>
     <p class="unit-description">Protein catalysts, induced-fit model, enzyme kinetics, and the effect of temperature, pH, and inhibitors.</p>
   </div>
-  <div class="coming-soon">
-    <span class="coming-soon-icon">🔩</span>
-    <h3>Visualization Coming Soon</h3>
-    <p>An interactive enzyme kinetics simulator is under construction.</p>
+ 
+  <!-- Enzyme slide tab bar -->
+  <div class="slide-tabs" id="enzTabs">
+    <button class="slide-tab active" onclick="showEnzSlide(0)">What Are Enzymes?</button>
+    <button class="slide-tab" onclick="showEnzSlide(1)">Activation Energy</button>
+    <button class="slide-tab" onclick="showEnzSlide(2)">Substrate Complex</button>
+    <button class="slide-tab" onclick="showEnzSlide(3)">Induced Fit</button>
+    <button class="slide-tab" onclick="showEnzSlide(4)">Enzyme Factors</button>
+    <button class="slide-tab" onclick="showEnzSlide(5)">Inhibitors</button>
   </div>
+ 
+  <!-- ENZ SLIDE 0: What are enzymes -->
+  <div class="enz-slide" id="enz-slide-0">
+    <div class="slide-hero" style="background:rgba(154,108,0,0.08); border-left:4px solid #9a6c00;">
+      <div class="slide-hero-text">
+        <div class="unit-kicker">Enzymes 01</div>
+        <h3 class="slide-title">What Are Enzymes?</h3>
+        <p class="slide-tagline">Biological catalysts that speed up chemical reactions without being permanently changed.</p>
+      </div>
+    </div>
+    <div class="slide-body">
+      <div class="slide-col">
+        <div class="slide-section-label">Definition &amp; Structure</div>
+        <p class="slide-text">Most enzymes are <strong>proteins</strong> at the tertiary or quaternary structural level. They act as <strong>biological catalysts</strong> — they speed up chemical reactions by lowering the energy needed to start them. Crucially, enzymes are <strong>not permanently changed</strong> in the process and can be used over and over.</p>
+        <div class="slide-section-label" style="margin-top:1.2rem;">Naming Convention</div>
+        <p class="slide-text">Almost all enzyme names end in <strong>"-ase"</strong>, usually derived from the substrate they act on:</p>
+        <ul class="slide-list" style="margin-top:0.5rem;">
+          <li><strong>Sucrase</strong> — breaks down sucrose (table sugar)</li>
+          <li><strong>Lactase</strong> — breaks down lactose (milk sugar)</li>
+          <li><strong>Maltase</strong> — breaks down maltose (malt sugar)</li>
+          <li><strong>Amylase</strong> — breaks down starch (in saliva)</li>
+          <li><strong>DNA Polymerase</strong> — builds new DNA strands</li>
+        </ul>
+      </div>
+      <div class="slide-col">
+        <div class="slide-section-label">Key Properties</div>
+        <ul class="slide-list">
+          <li><strong>Specificity</strong> — each enzyme acts on only one specific substrate, like a lock and key</li>
+          <li><strong>Reusable</strong> — after the reaction finishes, the enzyme is released unchanged and can bind a new substrate</li>
+          <li><strong>Catalyst</strong> — speeds up a reaction without being consumed or permanently altered</li>
+          <li><strong>Protein-based</strong> — most are proteins (tertiary/quaternary structure), though some RNA molecules (ribozymes) also act as enzymes</li>
+        </ul>
+        <div class="slide-fact-box">
+          <span class="slide-fact-label">Enzymes in Your Body Right Now</span>
+          Your saliva contains <strong>amylase</strong> that begins breaking down starch as you chew. Your stomach uses <strong>pepsin</strong> to digest proteins. Your small intestine uses <strong>lipase, protease, and more amylase</strong> to complete digestion. Thousands of enzyme-catalyzed reactions run simultaneously in every cell.
+        </div><br><br><br>
+        <img src="data:image/jpeg;base64,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">
+      </div>
+    </div>
+  </div>
+ 
+  <!-- ENZ SLIDE 1: Activation Energy -->
+  <div class="enz-slide" id="enz-slide-1" style="display:none;">
+    <div class="slide-hero" style="background:rgba(154,108,0,0.08); border-left:4px solid #9a6c00;">
+      <div class="slide-hero-text">
+        <div class="unit-kicker">Enzymes 02</div>
+        <h3 class="slide-title">Activation Energy</h3>
+        <p class="slide-tagline">Enzymes lower the energy barrier that must be overcome to start a reaction.</p>
+      </div>
+    </div>
+    <div class="slide-body">
+      <div class="slide-col">
+        <div class="slide-section-label">How Enzymes Lower Activation Energy</div>
+        <p class="slide-text">Every chemical reaction requires an initial input of energy — called <strong>activation energy</strong> — to get started, even reactions that ultimately release energy. Enzymes work by <strong>weakening bonds</strong> in the substrate, which lowers this energy barrier and allows reactions to proceed much faster at body temperature.</p>
+        <div class="slide-section-label" style="margin-top:1.2rem;">Without vs. With an Enzyme</div>
+        <ul class="slide-list" style="margin-top:0.5rem;">
+          <li><strong>Without enzyme</strong> — reactants must climb a steep energy hill before products can form; very slow at body temperature</li>
+          <li><strong>With enzyme</strong> — the energy hill is dramatically lowered; the same reaction happens thousands of times faster</li>
+          <li>The overall <strong>energy change</strong> of the reaction (products vs. reactants) is <em>unchanged</em> — the enzyme only changes the speed, not the outcome</li>
+        </ul>
+      </div>
+      <div class="slide-col">
+        <div class="slide-fact-box">
+          <span class="slide-fact-label">Key Insight</span>
+          The enzyme does <strong>not</strong> change whether a reaction is energetically favorable — it only changes <em>how fast</em> it happens. The products and overall energy released are identical with or without the enzyme.
+        </div>
+        <br><br>
+        <img src="data:image/jpeg;base64,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">
+      </div>
+    </div>
+  </div>
+ 
+  <!-- ENZ SLIDE 2: Enzyme-Substrate Complex -->
+  <div class="enz-slide" id="enz-slide-2" style="display:none;">
+    <div class="slide-hero" style="background:rgba(154,108,0,0.08); border-left:4px solid #9a6c00;">
+      <div class="slide-hero-text">
+        <div class="unit-kicker">Enzymes 03</div>
+        <h3 class="slide-title">Enzyme–Substrate Complex</h3>
+        <p class="slide-tagline">The substrate binds to the active site, forming a temporary enzyme–substrate complex.</p>
+      </div>
+    </div>
+    <div class="slide-body">
+      <div class="slide-col">
+        <div class="slide-section-label">Substrate &amp; Active Site</div>
+        <p class="slide-text">The molecule an enzyme acts on is called the <strong>substrate</strong>. The enzyme has a specialized region called the <strong>active site</strong> — a restricted pocket or groove with a specific 3D shape. When the substrate enters the active site, the <strong>enzyme–substrate complex</strong> forms temporarily, and the reaction occurs. The enzyme then releases the product and is free to bind another substrate.</p>
+        <div class="slide-section-label" style="margin-top:1.2rem;">Steps of a Catalyzed Reaction</div>
+        <ul class="slide-list" style="margin-top:0.5rem;">
+          <li><strong>Step 1</strong> — Free enzyme (active site open) encounters substrate in solution</li>
+          <li><strong>Step 2</strong> — Substrate binds the active site → <em>enzyme–substrate complex</em> forms</li>
+          <li><strong>Step 3</strong> — Chemical bonds in the substrate are broken or formed</li>
+          <li><strong>Step 4</strong> — Products are released; enzyme returns to its original shape</li>
+          <li><strong>Step 5</strong> — Enzyme is free to catalyze the next reaction</li>
+        </ul>
+      </div>
+      <div class="slide-col">
+        <div class="slide-fact-box">
+          <span class="slide-fact-label">Specificity — Lock &amp; Key</span>
+          Because the active site has a very specific shape, most enzymes can only bind <strong>one type of substrate</strong>. This is called <em>enzyme specificity</em>. For example, sucrase will only bind sucrose — it cannot bind lactose or starch.
+        </div><br><br>
+        <img src="https://www.shutterstock.com/image-illustration/human-mechanism-enzyme-action-substrate-260nw-2451524867.jpg">
+      </div>
+    </div>
+  </div>
+ 
+  <!-- ENZ SLIDE 3: Induced Fit -->
+  <div class="enz-slide" id="enz-slide-3" style="display:none;">
+    <div class="slide-hero" style="background:rgba(154,108,0,0.08); border-left:4px solid #9a6c00;">
+      <div class="slide-hero-text">
+        <div class="unit-kicker">Enzymes 04</div>
+        <h3 class="slide-title">Induced Fit Model</h3>
+        <p class="slide-tagline">The active site flexes and adjusts its shape when the substrate binds — like a glove conforming to a hand.</p>
+      </div>
+    </div>
+    <div class="slide-body">
+      <div class="slide-col">
+        <div class="slide-section-label">What Is Induced Fit?</div>
+        <p class="slide-text">The original <em>Lock-and-Key model</em> imagined the active site as a rigid, pre-formed pocket. The more accurate <strong>Induced Fit model</strong> shows that the active site is <em>flexible</em>. When the substrate approaches, the active site slightly changes its 3D configuration — involving <strong>hydrogen bonds and ionic bonds</strong> — to grip the substrate more tightly. This conformational change helps catalyze the reaction.</p>
+        <div class="slide-section-label" style="margin-top:1.2rem;">Lock-and-Key vs. Induced Fit</div>
+        <ul class="slide-list" style="margin-top:0.5rem;">
+          <li><strong>Lock-and-Key (old model)</strong> — active site is rigid; substrate fits perfectly without any change</li>
+          <li><strong>Induced Fit (current model)</strong> — active site is flexible; substrate <em>induces</em> a conformational change in the enzyme that tightens the fit and accelerates catalysis</li>
+        </ul>
+      </div>
+      <div class="slide-col">
+        <div class="slide-fact-box">
+          <span class="slide-fact-label">Why This Matters</span>
+          The induced fit mechanism explains why enzymes are such effective catalysts — the conformational change actually <strong>stresses bonds in the substrate</strong>, making them easier to break or rearrange, further lowering the activation energy.
+        </div><br><br>
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQH2XJAfAF88IF_-d3elk1K9ZzC6D7PfnJAMw&s">
+      </div>
+    </div>
+  </div>
+ 
+  <!-- ENZ SLIDE 4: Environmental Factors -->
+  <div class="enz-slide" id="enz-slide-4" style="display:none;">
+    <div class="slide-hero" style="background:rgba(154,108,0,0.08); border-left:4px solid #9a6c00;">
+      <div class="slide-hero-text">
+        <div class="unit-kicker">Enzymes 05</div>
+        <h3 class="slide-title">What Affects Enzyme Activity?</h3>
+        <p class="slide-tagline">Temperature, pH, and ionic concentration can all slow or permanently destroy an enzyme.</p>
+      </div>
+    </div>
+    <div class="slide-body">
+      <div class="slide-col">
+        <div class="slide-section-label">1. Temperature</div>
+        <p class="slide-text">Enzymes have an <strong>optimal temperature</strong> at which they work fastest. As temperature rises toward the optimum, reaction rate increases. However, <strong>excessive heat disrupts the hydrogen bonds</strong> that maintain the enzyme's 3D shape, causing it to <strong>denature</strong> (unfold) and lose function permanently.</p>
+        <div class="slide-section-label" style="margin-top:1rem;">2. pH</div>
+        <p class="slide-text">Most enzymes work best near <strong>neutral pH (6–8)</strong>. Each enzyme has a specific optimal pH. Extreme pH disrupts ionic and hydrogen bonds, denaturing the enzyme. Example: <em>pepsin</em> works best at pH 2 (stomach acid), while <em>trypsin</em> works best at pH 8 (small intestine).</p>
+        <div class="slide-section-label" style="margin-top:1rem;">3. Ionic Concentration (Salt Ions)</div>
+        <p class="slide-text">High concentrations of ions can interfere with the ionic bonds and hydrogen bonds that maintain the enzyme's active site shape, reducing or eliminating activity.</p>
+      </div>
+      <div class="slide-col">
+        <div class="slide-fact-box">
+          <span class="slide-fact-label">Denaturation Is (Usually) Permanent</span>
+          When an enzyme denatures, its shape is permanently destroyed — it cannot refold correctly. This is why high fever is dangerous: body temperatures above ~40°C can begin denaturing critical enzymes. This is also why cooking destroys enzymes in food.
+        </div><br><br><br>
+        <img src="data:image/png;base64,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">
+      </div>
+    </div>
+  </div>
+ 
+  <!-- ENZ SLIDE 5: Inhibitors -->
+  <div class="enz-slide" id="enz-slide-5" style="display:none;">
+    <div class="slide-hero" style="background:rgba(154,108,0,0.08); border-left:4px solid #9a6c00;">
+      <div class="slide-hero-text">
+        <div class="unit-kicker">Enzymes 06</div>
+        <h3 class="slide-title">Enzyme Inhibitors</h3>
+        <p class="slide-tagline">Molecules that reduce or block enzyme activity — nature's off-switch for chemical reactions.</p>
+      </div>
+    </div>
+    <div class="slide-body">
+      <div class="slide-col">
+        <div class="slide-section-label">a. Competitive Inhibitors</div>
+        <p class="slide-text">A <strong>competitive inhibitor</strong> is a molecule that <em>resembles the normal substrate</em> in shape. It competes with the real substrate for the same <strong>active site</strong>. If the inhibitor occupies the active site, the substrate cannot bind and the reaction cannot occur.</p>
+        <ul class="slide-list" style="margin-top:0.6rem;">
+          <li>Blocks the active site directly</li>
+          <li>Can be overcome by <strong>increasing substrate concentration</strong> — more substrate can out-compete the inhibitor</li>
+          <li>Example: <em>Sulfa drugs</em> compete with bacterial enzymes; <em>ibuprofen</em> competitively inhibits COX enzymes to reduce inflammation</li>
+        </ul>
+        <div class="slide-section-label" style="margin-top:1.2rem;">b. Noncompetitive Inhibitors</div>
+        <p class="slide-text">A <strong>noncompetitive inhibitor</strong> does <em>not</em> bind the active site. Instead, it attaches to a different region of the enzyme (an <strong>allosteric site</strong>), causing the enzyme's shape to change so the active site is <em>distorted</em> — the substrate can no longer fit.</p>
+        <ul class="slide-list" style="margin-top:0.6rem;">
+          <li>Does <strong>not</strong> compete with the substrate for the active site</li>
+          <li><strong>Cannot</strong> be overcome by adding more substrate</li>
+          <li>Example: Heavy metal poisoning (lead, mercury) — metals bind allosteric sites and permanently alter enzyme shape</li>
+        </ul>
+      </div>
+      <div class="slide-col">
+        <div class="slide-fact-box">
+          <span class="slide-fact-label">Cofactors &amp; Coenzymes</span>
+          Some enzymes need helpers to work: <strong>cofactors</strong> (inorganic ions like iron or zinc) and <strong>coenzymes</strong> (organic molecules, often vitamins). Example: hemoglobin needs <strong>iron</strong> in its quaternary structure to carry oxygen. Without the cofactor, the enzyme cannot function.
+        </div><br><br>
+        <img src="data:image/png;base64,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">
+        <br><br><img src="data:image/png;base64,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">
+      </div>
+    </div>
+  </div>
+ 
+  <!-- Enzyme Nav controls -->
+  <div class="slide-nav">
+    <button class="slide-nav-btn" id="enzPrevBtn" onclick="stepEnzSlide(-1)" disabled>← Previous</button>
+    <span class="slide-counter" id="enzSlideCounter">1 / 6</span>
+    <button class="slide-nav-btn" id="enzNextBtn" onclick="stepEnzSlide(1)">Next →</button>
+  </div><br><br><br><br>
 </div>
+ 
+<script>
+  var enzCurrentSlide = 0;
+  var enzTotalSlides = 6;
+ 
+  function showEnzSlide(index) {
+    for (var i = 0; i < enzTotalSlides; i++) {
+      var s = document.getElementById('enz-slide-' + i);
+      var tabs = document.getElementById('enzTabs').querySelectorAll('.slide-tab');
+      if (s) s.style.display = (i === index) ? 'block' : 'none';
+      if (tabs[i]) tabs[i].classList.toggle('active', i === index);
+    }
+    enzCurrentSlide = index;
+    document.getElementById('enzPrevBtn').disabled = (index === 0);
+    document.getElementById('enzNextBtn').disabled = (index === enzTotalSlides - 1);
+    document.getElementById('enzSlideCounter').textContent = (index + 1) + ' / ' + enzTotalSlides;
+  }
+ 
+  function stepEnzSlide(dir) {
+    var next = enzCurrentSlide + dir;
+    if (next >= 0 && next < enzTotalSlides) showEnzSlide(next);
+  }
+</script>
  
 <script>
   var pages = document.getElementsByClassName("scene");
@@ -1095,6 +1423,60 @@ Index · HTML
   }
   changePage(1);
 </script>
+ 
+<!-- PAGE 14: Vocabulary sub-page -->
+<div class="scene u1" style="display:none;background-image:repeating-linear-gradient(0deg,transparent,transparent 27px,rgba(26,23,20,0.04) 27px,rgba(26,23,20,0.04) 28px);">
+  <button class="back-link" onclick="changePage(3)"> Unit 1</button>
+  <div class="unit-header">
+    <div class="unit-kicker">Unit 01 · Topic C</div>
+    <h2>Vocabulary</h2>
+    <p class="unit-description">All 30 key terms for ADV Biomolecules &amp; Enzymes — definitions as written in the official study list.</p>
+  </div>
+ 
+  <table class="bio-summary-table" style="margin-bottom:3rem;">
+    <thead>
+      <tr>
+        <th style="width:2rem;">#</th>
+        <th style="width:180px;">Term</th>
+        <th>Definition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>1</td><td><strong>macromolecule</strong></td><td>large molecule formed by joining smaller organic molecules together</td></tr>
+      <tr><td>2</td><td><strong>polymer</strong></td><td>large molecule formed from smaller repeating units of identical, or nearly identical, compounds linked by covalent bonds</td></tr>
+      <tr><td>3</td><td><strong>carbohydrate</strong></td><td>organic compound made of monosaccharides; primary energy source for cells (glucose), also provides structure in cell walls (cellulose/chitin)</td></tr>
+      <tr><td>4</td><td><strong>protein</strong></td><td>organic compound made of amino acids joined by peptide bonds; primary building block of organisms</td></tr>
+      <tr><td>5</td><td><strong>amino acid</strong></td><td>carbon compound joined by peptide bonds; building block of proteins</td></tr>
+      <tr><td>6</td><td><strong>nucleic acid</strong></td><td>complex macromolecule that stores and communicates genetic information; Ex. deoxyribonucleic acid (DNA), ribonucleic acid (RNA)</td></tr>
+      <tr><td>7</td><td><strong>lipid</strong></td><td>macromolecule used to store energy, provide insulation, and make up the cell membrane [phospholipids]; examples of lipids are fats, oils, and waxes</td></tr>
+      <tr><td>8</td><td><strong>nucleotide</strong></td><td>monomer of nucleic acids; 3 components include: a nitrogen base, a phosphorus group, and a 5-carbon sugar</td></tr>
+      <tr><td>9</td><td><strong>monomer</strong></td><td>small unit that can join together with other small units to form a polymer</td></tr>
+      <tr><td>10</td><td><strong>monosaccharides</strong></td><td>single sugar molecule; monomer of a carbohydrate; examples: glucose, fructose, sucrose</td></tr>
+      <tr><td>11</td><td><strong>catalyst</strong></td><td>a substance that speeds up the rate of a chemical reaction</td></tr>
+      <tr><td>12</td><td><strong>enzyme</strong></td><td>a type of protein that speeds up chemical reactions by lowering the activation energy</td></tr>
+      <tr><td>13</td><td><strong>activation energy</strong></td><td>energy needed to get a chemical reaction started; "start-up energy"</td></tr>
+      <tr><td>14</td><td><strong>substrate</strong></td><td>the reactant in a chemical reaction using an enzyme</td></tr>
+      <tr><td>15</td><td><strong>active site</strong></td><td>the small portion of an enzyme where substrate molecules bind &amp; undergo a chemical reaction</td></tr>
+      <tr><td>16</td><td><strong>enzyme-substrate complex</strong></td><td>a substrate bound to the active site of an enzyme</td></tr>
+      <tr><td>17</td><td><strong>enzyme inhibitors</strong></td><td>a molecule that prevents the formation of the enzyme substrate complex so that the chemical reaction can not take place</td></tr>
+      <tr><td>18</td><td><strong>biomolecule</strong></td><td>the molecules of life that include: carbohydrates, lipids, proteins and nucleic acids</td></tr>
+      <tr><td>19</td><td><strong>carbon</strong></td><td>a nonmetallic element found in nature as part of coal, petroleum, and of the bodies of living things</td></tr>
+      <tr><td>20</td><td><strong>dehydration synthesis</strong></td><td>a chemical reaction in which two molecules are bonded together with the removal of a water molecule</td></tr>
+      <tr><td>21</td><td><strong>fatty acid</strong></td><td>an organic acid that is contained in lipids, such as fats or oils</td></tr>
+      <tr><td>22</td><td><strong>glucose</strong></td><td>a simple sugar (carbohydrate) that is an important source of energy</td></tr>
+      <tr><td>23</td><td><strong>glycerol</strong></td><td>a three-carbon alcohol to which fatty acids are covalently bonded to make lipids (fats and oils)</td></tr>
+      <tr><td>24</td><td><strong>reactant</strong></td><td>a chemical substance that is present at the start of a chemical reaction</td></tr>
+      <tr><td>25</td><td><strong>product</strong></td><td>a substance produced in a chemical reaction</td></tr>
+      <tr><td>26</td><td><strong>synthesis</strong></td><td>combining parts into a whole (to make)</td></tr>
+      <tr><td>27</td><td><strong>phospholipid</strong></td><td>a lipid that contains phosphorus and that is a structural component in cell membranes</td></tr>
+      <tr><td>28</td><td><strong>polysaccharide</strong></td><td>carbohydrates that are made up of more than two monosaccharides</td></tr>
+      <tr><td>29</td><td><strong>mono-</strong></td><td>one</td></tr>
+      <tr><td>30</td><td><strong>poly-</strong></td><td>many</td></tr>
+    </tbody>
+  </table>
+  <iframe src="unitOneQuiz.html" width="100%" height="100%" style="border:none;"></iframe>
+</div>
+
  
 </body>
 </html>
