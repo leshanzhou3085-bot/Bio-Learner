@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biomolecules & Enzymes Quiz</title>
+    <style>
+        :root {
+            --bg-color: #f4f7f6;
+            --card-bg: #ffffff;
+            --primary-color: #2B2D42;
+            --success-color: #2ec4b6;
+            --error-color: #e71d36;
+            --text-color: #2b2d42;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #F4F1E8;
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .quiz-container {
+            background-color: #EFE7D5;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(32, 25, 0, 5);
+            max-width: 600px;
+            width: 100%;
+            padding: 30px;
+            box-sizing: border-box;
+        }
+
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #9A6C00;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+            color:#9A6C00;
+        }
+
+        h2 {
+            margin: 0;
+            font-size: 1.4rem;
+            color:#9A6C00;
+        }
+
+        .score-board {
+            font-weight: bold;
+            background-color: #F4F1E8;
+            padding: 12px 24px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            text-align: center;
+            line-height: 1.5
+
+        }
+
+        .question {
+            font-size: 1.1rem;
+            line-height: 2;
+            margin-bottom: 25px;
+            font-weight: 500;
+            
+        }
+
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            
+        }
+
+        .option-btn {
+            border: 2px solid #eef1f4;
+            border-radius: 8px;
+            padding: 14px 20px;
+            font-size: 1rem;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.2s ease;
+           background-color:#F4F1E8;
+            border-color:#9A6C00
+
+        }
+
+        .option-btn:hover:not([disabled]) {
+            border-color: var(--primary-color);
+            background-color:#e9c571;
+        }
+
+        .option-btn:focus {
+            outline: none;
+        }
+
+        .correct {
+            background-color: #e6f9f7 !important;
+            border-color: var(--success-color) !important;
+            color: #0f6157 !important;
+            font-weight: bold;
+        }
+
+        .incorrect {
+            background-color: #ffebeb !important;
+            border-color: var(--error-color) !important;
+            color: #94111f !important;
+        }
+
+        .feedback {
+            margin-top: 20px;
+            font-weight: 600;
+            text-align: center;
+            min-height: 24px;
+        }
+
+        .next-btn {
+            display: none;
+            width: 100%;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 14px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.2s;
+        }
+
+        .next-btn:hover {
+            background-color: #357abd;
+        }
+    </style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <div class="quiz-header">
+        <h2>ADV Biomolecules & Enzymes Quiz</h2>
+        <div class="score-board">Questions Answered: <span id="score">        0</span></div>
+    </div>
+    
+    <div id="quiz-body">
+        <div class="question" id="question-text">Loading question...</div>
+        <div class="options-container" id="options-box"></div>
+        <div class="feedback" id="feedback-text"></div>
+        <button class="next-btn" id="next-button" onclick="generateQuestion()">Next Question &rarr;</button>
+    </div>
+</div>
+
+<script>
+    // Dataset extracted directly from the provided text vocabulary
+    const vocabData = [
+        { term: "macromolecule", definition: "large molecule formed by joining smaller organic molecules together" },
+        { term: "polymer", definition: "large molecule formed from smaller repeating units of identical, or nearly identical, compounds linked by covalent bonds" },
+        { term: "carbohydrate", definition: "organic compound made of monosaccharides; primary energy source for cells (glucose), also provides structure in cell walls (cellulose/chitin)" },
+        { term: "protein", definition: "organic compound made of amino acids joined by peptide bonds; primary building block of organisms" },
+        { term: "amino acid", definition: "carbon compound joined by peptide bonds; building block of proteins" },
+        { term: "nucleic acid", definition: "complex macromolecule that stores and communicates genetic information; Ex. deoxyribonucleic acid (DNA), ribonucleic acid (RNA)" },
+        { term: "lipid", definition: "macromolecule used to store energy, provide insulation, and make up the cell membrane [phospholipids]; examples of lipids are fats, oils, and waxes" },
+        { term: "nucleotide", definition: "monomer of nucleic acids; 3 components include: a nitrogen base, a phosphorus group, and a 5-carbon sugar" },
+        { term: "monomer", definition: "small unit that can join together with other small units to form a polymer" },
+        { term: "monosaccharides", definition: "single sugar molecule; monomer of a carbohydrate; examples: glucose, fructose, sucrose" },
+        { term: "catalyst", definition: "a substance that speeds up the rate of a chemical reaction" },
+        { term: "enzyme", definition: "a type of protein that speeds up chemical reactions by lowering the activation energy" },
+        { term: "activation energy", definition: "energy needed to get a chemical reaction started; 'start-up energy'" },
+        { term: "substrate", definition: "the reactant in a chemical reaction using an enzyme" },
+        { term: "active site", definition: "the small portion of an enzyme where substrate molecules bind & undergo a chemical reaction" },
+        { term: "enzyme-substrate complex", definition: "a substrate bound to the active site of an enzyme" },
+        { term: "enzyme inhibitors", definition: "a molecule that prevents the formation of the enzyme substrate complex so that the chemical reaction can not take place" },
+        { term: "biomolecule", definition: "The molecules of life that include: carbohydrates, lipids, proteins and nucleic acids." },
+        { term: "carbon", definition: "a nonmetallic element found in nature as part of coal, petroleum, and of the bodies of living things" },
+        { term: "dehydration synthesis", definition: "A chemical reaction in which two molecules are bonded together with the removal of a water molecule." },
+        { term: "fatty acid", definition: "an organic acid that is contained in lipids, such as fats or oils" },
+        { term: "glucose", definition: "A simple sugar (carbohydrate) that is an important source of energy." },
+        { term: "glycerol", definition: "A three-carbon alcohol to which fatty acids are covalently bonded to make lipids (fats and oils)." },
+        { term: "reactant", definition: "A chemical substance that is present at the start of a chemical reaction" },
+        { term: "product", definition: "A substance produced in a chemical reaction" },
+        { term: "synthesis", definition: "combining parts into a whole (to make)" },
+        { term: "phospholipid", definition: "a lipid that contains phosphorus and that is a structural component in cell membranes" },
+        { term: "polysaccharide", definition: "Carbohydrates that are made up of more than two monosaccharides" },
+        { term: "mono-", definition: "one" },
+        { term: "poly-", definition: "many" }
+    ];
+
+    let questionsAnsweredCount = 0;
+    let currentCorrectAnswer = "";
+
+    function getRandomIndex(max) {
+        return Math.floor(Math.random() * max);
+    }
+
+    // Shuffle helper to mix answer options randomly
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    }
+
+    function generateQuestion() {
+        // Reset element styling
+        document.getElementById("feedback-text").innerText = "";
+        document.getElementById("feedback-text").style.color = "unset";
+        document.getElementById("next-button").style.display = "none";
+
+        // Choose a random item from the vocab list
+        const correctItem = vocabData[getRandomIndex(vocabData.length)];
+        currentCorrectAnswer = correctItem.term;
+
+        // Set the question text to the definition
+        document.getElementById("question-text").innerText = `Definition:\n${correctItem.definition}`;
+
+        // Gather 3 random incorrect terms
+        let options = [correctItem.term];
+        while (options.length < 4) {
+            const randomItem = vocabData[getRandomIndex(vocabData.length)];
+            if (!options.includes(randomItem.term)) {
+                options.push(randomItem.term);
+            }
+        }
+
+        // Shuffle all 4 options
+        options = shuffleArray(options);
+
+        // Render option buttons
+        const optionsBox = document.getElementById("options-box");
+        optionsBox.innerHTML = "";
+        
+        options.forEach(option => {
+            const btn = document.createElement("button");
+            btn.className = "option-btn";
+            btn.innerText = option;
+            btn.onclick = function() { selectOption(btn, option); };
+            optionsBox.appendChild(btn);
+        });
+    }
+
+    function selectOption(selectedButton, chosenTerm) {
+        const allButtons = document.querySelectorAll(".option-btn");
+        const feedbackElement = document.getElementById("feedback-text");
+
+        // Disable all buttons immediately after an answer is selected
+        allButtons.forEach(btn => {
+            btn.disabled = true;
+            // Reveal where the correct answer was
+            if (btn.innerText === currentCorrectAnswer) {
+                btn.classList.add("correct");
+            }
+        });
+
+        // Evaluate answer
+        if (chosenTerm === currentCorrectAnswer) {
+            selectedButton.classList.add("correct");
+            feedbackElement.innerText = "Correct! Well done.";
+            feedbackElement.style.color = "var(--success-color)";
+        } else {
+            selectedButton.classList.add("incorrect");
+            feedbackElement.innerText = `Incorrect. The correct term was: ${currentCorrectAnswer}`;
+            feedbackElement.style.color = "var(--error-color)";
+        }
+
+        // Increment the infinite counter and update display
+        questionsAnsweredCount++;
+        document.getElementById("score").innerText = questionsAnsweredCount;
+
+        // Reveal the button to trigger the next infinite question
+        document.getElementById("next-button").style.display = "block";
+    }
+
+    // Start the infinite loop on initial load
+    generateQuestion();
+</script>
+
+</body>
+</html>
